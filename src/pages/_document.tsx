@@ -5,6 +5,7 @@ export default class MyDocument extends Document {
         return (
             <Html>
                 <Head>
+                    <link rel="shortcut icon" href="./favicon.png" type="image/PNG" />
                     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
                     {/* font-family: 'Roboto', sans-serif; 400 500 700
                         font-family: 'Roboto Mono', monospace; */}

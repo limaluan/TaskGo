@@ -1,22 +1,21 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SidenavContainer = styled.div`
   width: 25rem;
   height: 92vh;
   background-color: white;
-  padding: 2.5rem;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
   .subtitle {
     color: var(--text);
-    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-bottom: 1.5rem;
   }
 
-  [class='subtitle']:last-of-type {
-    padding-top: 0.5rem;
-    padding-bottom: 0;
+  [class="subtitle"]:last-of-type {
+    padding-top: 1.5rem;
   }
 
   .nav {
@@ -25,10 +24,13 @@ export const SidenavContainer = styled.div`
     gap: 1rem;
     font-size: 1.4rem;
     color: initial;
-    width: fit-content;
+    height: 4rem;
+    width: 100%;
+    border-radius: 3rem;
+    padding: 1rem;
 
     :hover {
-      text-decoration: underline;
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 
