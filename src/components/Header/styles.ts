@@ -9,6 +9,8 @@ export const HeaderContainer = styled.header`
   align-items: center;
   background-color: #ffffff;
   position: relative;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  z-index: 1;
 
   .sidenav-button {
     font-size: 3rem;

@@ -20,9 +20,19 @@ export const GlobalStyles = createGlobalStyle`
     html {
         font-size: 62.5%;
         font-family: 'Roboto', sans-serif;
+        color: var(--text);
     }
 
     body {
         background-color: var(--background);
+    }
+
+    .sidenav {
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
+    
+    .sidenav.on {
+      transform: translateX(0%);
     }
 `;
