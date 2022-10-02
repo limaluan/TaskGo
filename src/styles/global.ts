@@ -20,7 +20,7 @@ export const GlobalStyles = createGlobalStyle`
     html {
         font-size: 62.5%;
         font-family: 'Roboto', sans-serif;
-        color: var(--text);
+        color: var(--title);
     }
 
     body {
@@ -30,9 +30,27 @@ export const GlobalStyles = createGlobalStyle`
     .sidenav {
       transform: translateX(-100%);
       transition: transform 0.5s;
+      position: absolute;
+      z-index: 1;
     }
     
     .sidenav.on {
       transform: translateX(0%);
+    }
+
+    .expanded { /* Classe usada para indicar quais elementos irão se expandir ao recolher a sidenav */
+      width: calc(100% - 24rem);
+      float: right;
+      transition: width 0.5s;
+    }
+
+    .expanded.on {
+      width: 100%;
+    }
+
+    @media (max-width: 540px) {
+      .expanded {
+        width: 100%;
+      }
     }
 `;

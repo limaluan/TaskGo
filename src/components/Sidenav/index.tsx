@@ -6,7 +6,7 @@ export function Sidenav() {
       <SidenavContainer>
         {/* Sessão de Gerenciamento */}
         <h3 className="subtitle">GERENCIAMENTO</h3>
-        <a href="#" className="nav">
+        <a href="/entidades" className="nav">
           <i className="material-icons">contacts</i>
           <h3>Entidades</h3>
         </a>

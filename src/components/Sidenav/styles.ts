@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const SidenavContainer = styled.div`
-  width: 25rem;
+  width: 24rem;
   height: 92vh;
   background-color: white;
   padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid var(--gray-light);
 
   .subtitle {
     color: var(--text);

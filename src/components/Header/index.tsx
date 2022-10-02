@@ -3,6 +3,7 @@ import { HeaderContainer } from "./styles";
 export function Header() {
     const handleToggleSidenav = () => {
       document.querySelector('.sidenav')?.classList.toggle('on');
+      document.querySelector('.expanded')?.classList.toggle('on');
     }
   
     return(
