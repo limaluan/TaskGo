@@ -27,6 +27,22 @@ export const GlobalStyles = createGlobalStyle`
         background-color: var(--background);
     }
 
+    button {
+      border: none;
+      border-radius: 0.5rem;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      transition: filter 0.2s;
+
+      :hover {
+        cursor: pointer;
+        filter: brightness(0.9);
+      }
+    }
+    
     .sidenav {
       transform: translateX(-100%);
       transition: transform 0.5s;
