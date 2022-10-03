@@ -5,6 +5,7 @@ export const EntidadesContainer = styled.div`
   background-color: cornflowerblue;
   padding: 3rem;
   background-color: #ffffff;
+  overflow-y: scroll;
 
   .page-title {
     font-size: 4rem;
@@ -13,7 +14,7 @@ export const EntidadesContainer = styled.div`
   }
 
   .create-button {
-      background-color: #6ce679;
+      background-color: var(--green);
       width: 12rem;
       color: #ffffff;
   }
@@ -50,6 +51,7 @@ export const EntidadesContainer = styled.div`
       background-color: #47b5ff;
       border: 1px solid var(--gray-light);
       width: 10rem;
+      color: #ffffff;
 
       :hover {
         cursor: pointer;

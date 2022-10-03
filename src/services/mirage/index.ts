@@ -22,7 +22,7 @@ export function makeServer() {
           return `Entity ${i}`;
         },
         type() {
-          return Math.ceil(Math.random() * 10) > 0 ? "group" : "user";
+          return Math.ceil(Math.random() * 10) > 5 ? "group" : "user";
         },
         created_at() {
           return Date.now().toString();
@@ -31,12 +31,12 @@ export function makeServer() {
     },
 
     seeds(server) {
-      server.createList('entity', 5)
+      server.createList('entity', 10)
     },
 
     routes() {
       this.namespace = "api";
-      // this.timing = 750;
+      this.timing = 750;
 
       this.get("/entities");
       this.post("/entities");
