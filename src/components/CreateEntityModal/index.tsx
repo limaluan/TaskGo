@@ -1,11 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { IEntity, getGroups } from "../../services/hooks/useEntities";
+import { api } from "../../services/api";
+import { getGroups } from "../../services/hooks/useEntities";
+import { IEntity } from "../../services/mirage";
 import { CreateEntityContainer } from "./styles";
 
 interface ICreateEntityModalProps {
   isOpen: boolean;
-  onRequestClose?: () => void;
+  onRequestClose: () => void;
 }
 
 export function CreateEntityModal({
@@ -18,6 +20,7 @@ export function CreateEntityModal({
     getGroups().then((groupsData) => setGroups(groupsData));
   }, []);
 
+  // Ativa e desativa a seção de selecionar Grupos ao trocar de tipo de entidade
   const handleEntityTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value);
     document.querySelector(".group-section")?.classList.toggle("off");
@@ -25,17 +28,46 @@ export function CreateEntityModal({
     document.querySelector("#id")?.classList.toggle("off");
   };
 
+  // Define qual grupo foi selecionado
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
     });
 
+    setGroupId(groupId);
     document.querySelector(`#card-${groupId}`)?.classList.add("selected");
   };
 
+  // Faz o post da Entidade
+  const handleSubmit = async () => {
+    const entity: Partial<IEntity> = {
+      name,
+      type,
+      id: type === "group" ? (Math.random() * 10).toString() : id,
+      group: type === "group" ? undefined : groupId,
+    };
+
+    try {
+      await api.post("/entities", entity);
+    } catch (e: any) {
+      return setCreateErrorMsg(e.response.data.message + "*");
+    }
+
+    setName("");
+    setType("");
+    setId("");
+    setGroupId("");
+    getGroups().then((groupsData) => setGroups(groupsData));
+    onRequestClose();
+  };
+
+  // Formulário da Entidade
   const [name, setName] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("user");
   const [id, setId] = useState("");
+  const [groupId, setGroupId] = useState("");
+
+  const [createErrorMsg, setCreateErrorMsg] = useState("");
 
   return (
     <Modal
@@ -43,6 +75,7 @@ export function CreateEntityModal({
       onRequestClose={onRequestClose}
       className="modal-content"
       overlayClassName="modal-overlay"
+      ariaHideApp={false}
     >
       <CreateEntityContainer>
         <h1>Criar {type === "group" ? "Grupo" : "Usuário"}</h1>
@@ -60,10 +93,11 @@ export function CreateEntityModal({
           </div>
           <input
             type="text"
-            placeholder="Nome"
+            placeholder={`Nome ${type === "group" ? "do grupo" : "do usuário"}`}
             id="name"
             value={name}
             required
+            maxLength={10}
             onChange={(e) => setName(e.target.value)}
           />
           <input
@@ -75,7 +109,7 @@ export function CreateEntityModal({
           />
         </form>
         <h1 id="group-section-title">Selecione um grupo*</h1>
-        <div className="group-section">
+        <section className="group-section">
           <div className="wrapper">
             {groups.map((group) => (
               <div
@@ -89,8 +123,9 @@ export function CreateEntityModal({
               </div>
             ))}
           </div>
-        </div>
-        <button type="submit" className="create-button">
+        </section>
+        <p className="error-msg">{createErrorMsg}</p>
+        <button type="submit" className="create-button" onClick={handleSubmit}>
           <i className="material-icons">add</i>
           Criar
         </button>

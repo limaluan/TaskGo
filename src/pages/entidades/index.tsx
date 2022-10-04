@@ -43,7 +43,7 @@ export default function Entidades() {
         ) : (
           <>
             {data?.map((entity: any) => (
-              <>
+              <div key={entity.id}>
                 <div className="entity">
                   <div className="entity-name">
                     <i className="material-icons">
@@ -67,7 +67,7 @@ export default function Entidades() {
                   <div className="entity-options"></div>
                 </div>
                 <hr />
-              </>
+              </div>
             ))}
           </>
         )}

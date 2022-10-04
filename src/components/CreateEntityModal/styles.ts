@@ -56,6 +56,11 @@ export const CreateEntityContainer = styled.div`
     }
   }
 
+  .error-msg {
+    color: #E02041;
+    font-size: 1.2rem;
+  }
+  
   .create-button {
     background-color: var(--green);
     color: #ffffff;

@@ -1,18 +1,18 @@
 import { createServer, Factory, Model } from "miragejs";
 
-type Entity = {
+export interface IEntity {
   id: string;
   name: string;
   type: string;
   created_at: string;
   group: string;
   tasks: string[];
-};
+}
 
 export function makeServer() {
   const server = createServer({
     models: {
-      entity: Model.extend<Partial<Entity>>({}),
+      entity: Model.extend<Partial<IEntity>>({}),
     },
 
     factories: {
@@ -47,7 +47,27 @@ export function makeServer() {
       this.timing = 1500;
 
       this.get("/entities");
-      this.post("/entities");
+      this.post("/entities", (schema, request) => {
+        const data = JSON.parse(request.requestBody);
+
+        if (data.name === "") {
+          throw Error("A Entidade deve conter um nome.");
+        }
+
+        if (!data.id || schema.findBy("entity", { id: data.id })) {
+          throw Error("ID Inválido ou já está em uso.");
+        }
+
+        if (data.type === "user" && !data.group) {
+          throw Error("Deve associar Usuário com um Grupo.");
+        }
+
+        return schema.create("entity", {
+          ...data,
+          created_at: "100",
+          tasks: [],
+        });
+      });
 
       this.namespace = "";
       this.passthrough();

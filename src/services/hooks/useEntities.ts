@@ -1,12 +1,6 @@
 import { useQuery } from "react-query";
 import { api } from "../api";
-
-export interface IEntity {
-  id: string;
-  name: string;
-  type: string;
-  created_at: string;
-};
+import { IEntity } from "../mirage";
 
 export async function getEntities(): Promise<IEntity[]> {
   const { data } = await api.get("/entities");
