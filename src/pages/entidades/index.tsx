@@ -1,20 +1,14 @@
 import Head from "next/head";
 import { EntidadesContainer } from "./styles";
-import { useQuery } from "react-query";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { api } from "../../services/api";
+import { useEntities } from "../../services/hooks/useEntities";
+import { CreateEntityModal } from "../../components/CreateEntityModal";
+import { useState } from "react";
 
 export default function Entidades() {
-  // Retorna todas entidades ( Direto para o cache )
-  const { data, isLoading, error } = useQuery(
-    "users",
-    async () => {
-      const { data } = await api.get("/entities");
+  const { data, isLoading, error } = useEntities();
 
-      return data;
-    },
-    { staleTime: 1000 * 5 /* 5 Segundos */ }
-  );
+  const [isEntityModalOpen, setEntityModalOpen] = useState(false);
 
   return (
     <main className="expanded">
@@ -23,7 +17,10 @@ export default function Entidades() {
       </Head>
       <EntidadesContainer>
         <h1 className="page-title">Entidades</h1>
-        <button className="create-button">
+        <button
+          className="create-button"
+          onClick={() => setEntityModalOpen(true)}
+        >
           <i className="material-icons">add</i>
           Criar Nova
         </button>
@@ -45,7 +42,7 @@ export default function Entidades() {
           <h1>Não foi possível carregar a lista de Entidades.</h1>
         ) : (
           <>
-            {data.entities.map((entity: any) => (
+            {data?.map((entity: any) => (
               <>
                 <div className="entity">
                   <div className="entity-name">
@@ -74,6 +71,11 @@ export default function Entidades() {
             ))}
           </>
         )}
+
+        <CreateEntityModal
+          isOpen={isEntityModalOpen}
+          onRequestClose={() => setEntityModalOpen(false)}
+        />
       </EntidadesContainer>
     </main>
   );

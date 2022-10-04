@@ -5,6 +5,8 @@ type Entity = {
   name: string;
   type: string;
   created_at: string;
+  group: string;
+  tasks: string[];
 };
 
 export function makeServer() {
@@ -27,16 +29,22 @@ export function makeServer() {
         created_at() {
           return Date.now().toString();
         },
+        group() {
+          return "";
+        },
+        tasks() {
+          return [];
+        },
       }),
     },
 
     seeds(server) {
-      server.createList('entity', 10)
+      server.createList("entity", 10);
     },
 
     routes() {
       this.namespace = "api";
-      this.timing = 750;
+      this.timing = 1500;
 
       this.get("/entities");
       this.post("/entities");
