@@ -15,6 +15,8 @@ export async function getEntities(): Promise<IEntity[]> {
         month: "long",
         year: "numeric",
       }),
+      group: entity.group,
+      tasks: entity.tasks,
     };
   });
 
