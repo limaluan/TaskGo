@@ -14,8 +14,8 @@ export function CreateEntityModal({
   isOpen,
   onRequestClose,
 }: ICreateEntityModalProps) {
-  const { data ,refetch } = useEntities();
-  
+  const { data, refetch } = useEntities();
+
   let [groups, setGroups] = useState<IEntity[]>([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function CreateEntityModal({
     const entity: Partial<IEntity> = {
       name,
       type,
-      id: type === "group" ? (Math.ceil(Math.random() * 1000)).toString() : id,
+      id: type === "group" ? Math.ceil(Math.random() * 1000).toString() : id,
       group: type === "group" ? undefined : groupId,
     };
 
@@ -115,17 +115,25 @@ export function CreateEntityModal({
         <h1 id="group-section-title">Selecione um grupo*</h1>
         <section className="group-section">
           <div className="wrapper">
-            {groups.map((group) => (
-              <div
-                className="group-card"
-                key={group.id}
-                id={`card-${group.id}`}
-                onClick={() => setGroupActive(group.id)}
-              >
-                <i className="material-icons">group</i>
-                <span>{group.name}</span>
-              </div>
-            ))}
+            {groups.length >= 1 ? (
+              <>
+                {groups.map((group) => (
+                  <div
+                    className="group-card"
+                    key={group.id}
+                    id={`card-${group.id}`}
+                    onClick={() => setGroupActive(group.id)}
+                  >
+                    <i className="material-icons">group</i>
+                    <span>{group.name}</span>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <h1 style={{ padding: "1rem 0" }}>
+                Ainda não há grupos cadastrados.
+              </h1>
+            )}
           </div>
         </section>
         <p className="error-msg">{createErrorMsg}</p>

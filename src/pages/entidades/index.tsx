@@ -32,9 +32,9 @@ export default function Entidades() {
     return setIsConfirmationModalOpen(true);
   }
 
-  // Responsável por ordenar a lista por ordem alfabética ou não
-  function orderByAlphabet(isOrderByAlphabet: boolean) {
-    if (!isOrderByAlphabet) {
+  // Responsável por ordenar a lista por ordem alfabética
+  function orderByAlphabet(isCrescentOrder: boolean) {
+    if (!isCrescentOrder) {
       const ordered = data?.sort((a, b) => {
         if (a.name.toUpperCase() < b.name.toUpperCase()) {
           return -1;
@@ -47,7 +47,7 @@ export default function Entidades() {
       if (ordered) {
         setEntities(ordered);
       }
-    } else if (isOrderByAlphabet) {
+    } else if (isCrescentOrder) {
       const ordered = data?.sort((a, b) => {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {
           return -1;
@@ -62,10 +62,6 @@ export default function Entidades() {
       }
     }
   }
-
-  useEffect(() => {
-    orderByAlphabet(true); // Inicia a lista de entidades por ordem alfabética
-  }, [data]);
 
   const [orderByName, setOrderByName] = useState(true); // Variável alterna se o usuário clicar no Nome
   const [orderByType, setOrderByType] = useState(false); // Variável alterna se o usuário clicar no Tipo
@@ -103,6 +99,10 @@ export default function Entidades() {
       }
     }
   };
+
+  useEffect(() => {
+    orderByAlphabet(true); // Inicia a lista de entidades por ordem alfabética
+  }, [data]);
 
   return (
     <main className="expanded">
@@ -161,7 +161,7 @@ export default function Entidades() {
                 style={{
                   width: "100%",
                   textAlign: "center",
-                  paddingTop: "2rem",
+                  padding: "2rem",
                 }}
               >
                 Nenhuma Entidade Encontrada.

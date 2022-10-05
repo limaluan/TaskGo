@@ -1,5 +1,4 @@
 import { createServer, Factory, Model } from "miragejs";
-import { EditEntityModal } from "../../components/EntityModals/EditEntityModal";
 
 export interface IEntity {
   id: string;
@@ -10,10 +9,19 @@ export interface IEntity {
   tasks: string[];
 }
 
+export interface ITask {
+  id: string;
+  name: string;
+  task_description: string;
+  state: string;
+  user: [];
+  group: [];
+}
+
 export function makeServer() {
   const server = createServer({
     models: {
-      entity: Model.extend<Partial<IEntity>>({}),
+      entity: Model.extend<IEntity>({} as IEntity),
     },
 
     factories: {
