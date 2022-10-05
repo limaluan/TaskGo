@@ -69,6 +69,26 @@ export function makeServer() {
         });
       });
 
+      this.put("/entities", (schema, request): any => {
+        const data = JSON.parse(request.requestBody);
+
+        if (!data.name) {
+          throw Error("A Entidade deve conter um nome.");
+        }
+
+        if (data.type === "user" && !data.group) {
+          throw Error("Deve associar Usuário com um Grupo.");
+        }
+
+        return schema.findBy("entity", { id: data.id })?.update(data);
+      });
+
+      this.delete("/entities/:id", (schema, request): any => {
+        const id = request.params.id;
+
+        return schema.find("entity", id)?.destroy();
+      });
+      
       this.namespace = "";
       this.passthrough();
     },

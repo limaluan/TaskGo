@@ -2,20 +2,40 @@ import Head from "next/head";
 import { EntidadesContainer } from "./styles";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEntities } from "../../services/hooks/useEntities";
-import { CreateEntityModal } from "../../components/CreateEntityModal";
+import { CreateEntityModal } from "../../components/EntityModals/CreateEntityModal";
 import { useEffect, useState } from "react";
 import { IEntity } from "../../services/mirage";
+import { EditEntityModal } from "../../components/EntityModals/EditEntityModal";
+import { ConfirmationModal } from "../../components/EntityModals/ConfirmationModal";
 
 export default function Entidades() {
   const { data, isLoading, error } = useEntities(); // Pega os dados da entidade do Cache
 
-  const [isEntityModalOpen, setEntityModalOpen] = useState(false);
+  // Estados de Ativação dos Modals
+  const [isCreateEntityModalOpen, setIsCreateEntityModalOpen] = useState(false);
+  const [isEditEntityModalOpen, setIsEditEntityModalOpen] = useState(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+  // Lista de Entidades
   const [entities, setEntities] = useState<IEntity[]>([]);
+
+  // Vai receber o id da Entidade a ser modificada ou deletada
+  const [entitySelected, setEntitySelected] = useState<IEntity>({} as IEntity);
+
+  function handleEditEntity(entity: IEntity) {
+    setEntitySelected(entity);
+    return setIsEditEntityModalOpen(true);
+  }
+
+  function handleDeleteEntity(entity: IEntity) {
+    setEntitySelected(entity);
+    return setIsConfirmationModalOpen(true);
+  }
 
   // Responsável por ordenar a lista por ordem alfabética ou não
   function orderByAlphabet(isOrderByAlphabet: boolean) {
     if (!isOrderByAlphabet) {
-      const ordered = data!.sort((a, b) => {
+      const ordered = data?.sort((a, b) => {
         if (a.name.toUpperCase() < b.name.toUpperCase()) {
           return -1;
         }
@@ -24,9 +44,11 @@ export default function Entidades() {
         }
         return 0;
       });
-      setEntities(ordered);
+      if (ordered) {
+        setEntities(ordered);
+      }
     } else if (isOrderByAlphabet) {
-      const ordered = data!.sort((a, b) => {
+      const ordered = data?.sort((a, b) => {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {
           return -1;
         }
@@ -35,7 +57,9 @@ export default function Entidades() {
         }
         return 0;
       });
-      setEntities(ordered);
+      if (ordered) {
+        setEntities(ordered);
+      }
     }
   }
 
@@ -49,18 +73,20 @@ export default function Entidades() {
   const handleOrderEntities = (order: string) => {
     orderByAlphabet(true);
 
-    if (order === "name") { // Se o usuário clicou no Nome:
+    if (order === "name") {
+      // Se o usuário clicou no Nome:
       setOrderByName(!orderByName);
       setOrderByType(false);
 
       orderByAlphabet(orderByName);
     }
-    if (order === "type") { // Se o usuário clicou no Tipo:
+    if (order === "type") {
+      // Se o usuário clicou no Tipo:
       if (!orderByType) {
         setOrderByType(true);
         setOrderByName(true);
 
-        //Ordena pelo tipo de Entidade 
+        //Ordena pelo TIPO de Entidade
         const ordered = data!.sort((a) => {
           if (a.type === "user") {
             return -1;
@@ -87,7 +113,7 @@ export default function Entidades() {
         <h1 className="page-title">Entidades</h1>
         <button
           className="create-button"
-          onClick={() => setEntityModalOpen(true)}
+          onClick={() => setIsCreateEntityModalOpen(true)}
         >
           <i className="material-icons">add</i>
           Criar Nova
@@ -136,20 +162,24 @@ export default function Entidades() {
                     </i>
                     <h3>{entity.name}</h3>
                   </div>
+
                   <div className="entity-type">
                     <h3>{entity.type === "group" ? "Grupo" : "Usuário"}</h3>
+
                     <div className="entity-options">
-                      <button>
+                      {/* Botão de Editar Entidade */}
+                      <button onClick={() => handleEditEntity(entity)}>
                         <i className="material-icons">edit</i>
                         <span>Editar</span>
                       </button>
-                      <button>
+
+                      {/* Botão de Deletar Entidade */}
+                      <button onClick={() => handleDeleteEntity(entity)}>
                         <i className="material-icons">delete</i>
                         <span>Deletar</span>
                       </button>
                     </div>
                   </div>
-                  <div className="entity-options"></div>
                 </div>
                 <hr />
               </div>
@@ -158,8 +188,18 @@ export default function Entidades() {
         )}
 
         <CreateEntityModal
-          isOpen={isEntityModalOpen}
-          onRequestClose={() => setEntityModalOpen(false)}
+          isOpen={isCreateEntityModalOpen}
+          onRequestClose={() => setIsCreateEntityModalOpen(false)}
+        />
+        <EditEntityModal
+          isOpen={isEditEntityModalOpen}
+          onRequestClose={() => setIsEditEntityModalOpen(false)}
+          entity={entitySelected}
+        />
+        <ConfirmationModal
+          isOpen={isConfirmationModalOpen}
+          onRequestClose={() => setIsConfirmationModalOpen(false)}
+          entity={entitySelected}
         />
       </EntidadesContainer>
     </main>

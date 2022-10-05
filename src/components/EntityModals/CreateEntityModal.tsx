@@ -54,7 +54,7 @@ export function CreateEntityModal({
     }
 
     setName("");
-    setType("");
+    setType("user");
     setId("");
     setGroupId("");
     getGroups().then((groupsData) => setGroups(groupsData));
