@@ -43,7 +43,7 @@ export function CreateEntityModal({
     const entity: Partial<IEntity> = {
       name,
       type,
-      id: type === "group" ? (Math.random() * 10).toString() : id,
+      id: type === "group" ? (Math.ceil(Math.random() * 1000)).toString() : id,
       group: type === "group" ? undefined : groupId,
     };
 
@@ -58,6 +58,7 @@ export function CreateEntityModal({
     setId("");
     setGroupId("");
     getGroups().then((groupsData) => setGroups(groupsData));
+    setCreateErrorMsg("");
     onRequestClose();
   };
 

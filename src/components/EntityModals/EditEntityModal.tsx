@@ -47,6 +47,7 @@ export function EditEntityModal({
 
     setNewName("");
     setNewGroupId("");
+    setEditErrorMsg("");
     return onRequestClose();
   };
 

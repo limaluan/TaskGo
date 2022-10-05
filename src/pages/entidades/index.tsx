@@ -146,13 +146,29 @@ export default function Entidades() {
         </div>
         <hr />
 
-        {/* Lista todos usuários */}
+        {/* Verifica o estado dos dados */}
         {isLoading ? (
           <LoadingSpinner />
         ) : error ? (
           <h1>Não foi possível carregar a lista de Entidades.</h1>
         ) : (
           <>
+            {/* Caso não encontre nenhuma entidade */}
+            {entities.length >= 1 ? (
+              <></>
+            ) : (
+              <h1
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  textAlign: "center",
+                  paddingTop: "2rem",
+                }}
+              >
+                Nenhuma Entidade Encontrada.
+              </h1>
+            )}
+            {/* Lista todas Entidades */}
             {entities.map((entity: any) => (
               <div key={entity.id}>
                 <div className="entity">
