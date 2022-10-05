@@ -11,17 +11,18 @@ export interface IEntity {
 
 export interface ITask {
   id: string;
-  name: string;
-  task_description: string;
+  description: string;
   state: string;
-  user: [];
-  group: [];
+  user_id: string;
+  group_id: string;
+  created_at: string;
 }
 
 export function makeServer() {
   const server = createServer({
     models: {
       entity: Model.extend<IEntity>({} as IEntity),
+      task: Model.extend<Partial<ITask>>({}),
     },
 
     factories: {
@@ -45,16 +46,29 @@ export function makeServer() {
           return [];
         },
       }),
+      task: Factory.extend({
+        id() {
+          return Math.ceil(Math.random() * 10000);
+        },
+        description() {
+          return `Task description example`;
+        },
+        state() {
+          return `Fazer`;
+        },
+      }),
     },
 
     seeds(server) {
       // server.createList("entity", 10);
+      server.createList("task", 5);
     },
 
     routes() {
       this.namespace = "api";
       this.timing = 1500;
 
+      // ROTAS DAS ENTIDADES
       this.get("/entities");
       this.post("/entities", (schema, request) => {
         const data = JSON.parse(request.requestBody);
@@ -95,11 +109,32 @@ export function makeServer() {
       this.delete("/entities/:id", (schema, request): any => {
         const id = request.params.id;
 
-        schema.where("entity", entity => entity.group === id).destroy();
+        schema.where("entity", (entity) => entity.group === id).destroy();
 
         return schema.find("entity", id)?.destroy();
       });
-      
+
+      // ROTAS DAS TAREFAS
+      this.get("/tasks");
+      this.post("tasks", (schema, request) => {
+        const data = JSON.parse(request.requestBody);
+
+        if (data.description === "") {
+          throw Error("A tarefa deve conter uma descrição.");
+        }
+
+        if (data.group_id === "") {
+          throw Error("A tarefa deve ser associada com um grupo.");
+        }
+
+        return schema.create("task", {
+          ...data,
+          id: Math.ceil(Math.random() * 10000),
+          state: "A Fazer",
+          user_id: data.user_id ? data.user_id : "---",
+        });
+      });
+
       this.namespace = "";
       this.passthrough();
     },

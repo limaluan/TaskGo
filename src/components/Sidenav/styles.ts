@@ -32,6 +32,7 @@ export const SidenavContainer = styled.div`
 
     :hover {
       background-color: rgba(0, 0, 0, 0.1);
+      cursor: pointer;
     }
   }
 

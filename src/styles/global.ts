@@ -20,6 +20,7 @@ export const GlobalStyles = createGlobalStyle`
         --subtext: #A8A8B3;
         --gray-light: #DCDCE6;
         --green: #6ce679;
+        --red: #E02041;
     }
 
     * {
@@ -87,6 +88,17 @@ export const GlobalStyles = createGlobalStyle`
       transform: translateX(0%);
     }
 
+    .green-button {
+      background-color: var(--green);
+      width: 12rem;
+      color: #ffffff;
+    }
+    
+  .error-msg {
+    color: var(--red);
+    font-size: 1.2rem;
+  }
+  
     .expanded { /* Classe usada para indicar quais elementos irão se expandir ao recolher a sidenav */
       width: calc(100% - 24rem);
       float: right;

@@ -115,7 +115,7 @@ export default function Entidades() {
       <EntidadesContainer>
         <h1 className="page-title">Entidades</h1>
         <button
-          className="create-button"
+          className="green-button"
           onClick={() => setIsCreateEntityModalOpen(true)}
         >
           <i className="material-icons">add</i>

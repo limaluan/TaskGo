@@ -24,7 +24,7 @@ export const CreateEntityContainer = styled.div`
     width: 100%;
   }
   
-  .group-section {
+  .select-section {
     padding-top: 1rem;
     
     width: 100%;
@@ -37,7 +37,7 @@ export const CreateEntityContainer = styled.div`
     gap: 2rem;
   }
 
-  .group-card {
+  [class*=-card] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,11 +54,6 @@ export const CreateEntityContainer = styled.div`
       filter: brightness(0.8);
       cursor: pointer;
     }
-  }
-
-  .error-msg {
-    color: #E02041;
-    font-size: 1.2rem;
   }
   
   .create-button {

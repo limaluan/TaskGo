@@ -12,21 +12,10 @@ export const EntidadesContainer = styled.div`
     font-family: "Poppins", sans-serif;
     padding-bottom: 1.5rem;
   }
-
-  .create-button {
-      background-color: var(--green);
-      width: 12rem;
-      color: #ffffff;
-  }
   
   .entity-search {
     width: 100%;
     margin: 1rem auto;
-  }
-  
-  .entity-header {
-    width: fit-content;
-    cursor: pointer;
   }
   
   .entity {
@@ -35,7 +24,7 @@ export const EntidadesContainer = styled.div`
     font-size: 1.6rem;
     position: relative;
     padding: 1.5rem 1rem;
-
+    
     grid-template-columns: 1fr 1fr;
   }
 
@@ -43,6 +32,11 @@ export const EntidadesContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  .entity-header {
+    width: fit-content;
+    cursor: pointer;
   }
 
   .entity-type {

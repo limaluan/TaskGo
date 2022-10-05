@@ -113,7 +113,7 @@ export function CreateEntityModal({
           />
         </form>
         <h1 id="group-section-title">Selecione um grupo*</h1>
-        <section className="group-section">
+        <section className="select-section">
           <div className="wrapper">
             {groups.length >= 1 ? (
               <>
