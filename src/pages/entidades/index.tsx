@@ -3,7 +3,7 @@ import { EntidadesContainer } from "./styles";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEntities } from "../../services/hooks/useEntities";
 import { CreateEntityModal } from "../../components/EntityModals/CreateEntityModal";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IEntity } from "../../services/mirage";
 import { EditEntityModal } from "../../components/EntityModals/EditEntityModal";
 import { ConfirmationModal } from "../../components/EntityModals/ConfirmationModal";
@@ -100,6 +100,9 @@ export default function Entidades() {
     }
   };
 
+  // Refere-se a pesquisa de entidades
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     orderByAlphabet(true); // Inicia a lista de entidades por ordem alfabética
   }, [data]);
@@ -118,6 +121,14 @@ export default function Entidades() {
           <i className="material-icons">add</i>
           Criar Nova
         </button>
+
+        <input
+          type="text"
+          placeholder="Pesquisar entidade"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="entity-search"
+        />
 
         {/* Cabeçalho */}
         <div className="entity">
@@ -167,38 +178,44 @@ export default function Entidades() {
                 Nenhuma Entidade Encontrada.
               </h1>
             )}
-            {/* Lista todas Entidades */}
-            {entities.map((entity: any) => (
-              <div key={entity.id}>
-                <div className="entity">
-                  <div className="entity-name">
-                    <i className="material-icons">
-                      {entity.type === "group" ? "group" : "account_circle"}
-                    </i>
-                    <h3>{entity.name}</h3>
-                  </div>
+            {/* Lista as Entidades */}
+            {entities
+              .filter((entity) => { // Filtra de acordo com a busca do usuário
+                return search.toLowerCase() === ""
+                  ? entity
+                  : entity.name.toLowerCase().includes(search.toLowerCase());
+              })
+              .map((entity: any) => (
+                <div key={entity.id}>
+                  <div className="entity">
+                    <div className="entity-name">
+                      <i className="material-icons">
+                        {entity.type === "group" ? "group" : "account_circle"}
+                      </i>
+                      <h3>{entity.name}</h3>
+                    </div>
 
-                  <div className="entity-type">
-                    <h3>{entity.type === "group" ? "Grupo" : "Usuário"}</h3>
+                    <div className="entity-type">
+                      <h3>{entity.type === "group" ? "Grupo" : "Usuário"}</h3>
 
-                    <div className="entity-options">
-                      {/* Botão de Editar Entidade */}
-                      <button onClick={() => handleEditEntity(entity)}>
-                        <i className="material-icons">edit</i>
-                        <span>Editar</span>
-                      </button>
+                      <div className="entity-options">
+                        {/* Botão de Editar Entidade */}
+                        <button onClick={() => handleEditEntity(entity)}>
+                          <i className="material-icons">edit</i>
+                          <span>Editar</span>
+                        </button>
 
-                      {/* Botão de Deletar Entidade */}
-                      <button onClick={() => handleDeleteEntity(entity)}>
-                        <i className="material-icons">delete</i>
-                        <span>Deletar</span>
-                      </button>
+                        {/* Botão de Deletar Entidade */}
+                        <button onClick={() => handleDeleteEntity(entity)}>
+                          <i className="material-icons">delete</i>
+                          <span>Deletar</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
+                  <hr />
                 </div>
-                <hr />
-              </div>
-            ))}
+              ))}
           </>
         )}
 

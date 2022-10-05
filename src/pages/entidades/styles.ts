@@ -19,6 +19,11 @@ export const EntidadesContainer = styled.div`
       color: #ffffff;
   }
   
+  .entity-search {
+    width: 100%;
+    margin: 1rem auto;
+  }
+  
   .entity-header {
     width: fit-content;
     cursor: pointer;
