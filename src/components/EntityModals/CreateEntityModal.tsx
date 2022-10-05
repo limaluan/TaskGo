@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
 import { api } from "../../services/api";
-import { getGroups } from "../../services/hooks/useEntities";
+import { useEntities, getGroups } from "../../services/hooks/useEntities";
 import { IEntity } from "../../services/mirage";
 import { CreateEntityContainer } from "./styles";
 
@@ -14,11 +14,13 @@ export function CreateEntityModal({
   isOpen,
   onRequestClose,
 }: ICreateEntityModalProps) {
+  const { data ,refetch } = useEntities();
+  
   let [groups, setGroups] = useState<IEntity[]>([]);
 
   useEffect(() => {
     getGroups().then((groupsData) => setGroups(groupsData));
-  }, []);
+  }, [data]);
 
   // Ativa e desativa a seção de selecionar Grupos ao trocar de tipo de entidade
   const handleEntityTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -59,7 +61,8 @@ export function CreateEntityModal({
     setGroupId("");
     getGroups().then((groupsData) => setGroups(groupsData));
     setCreateErrorMsg("");
-    onRequestClose();
+    refetch();
+    return onRequestClose();
   };
 
   // Formulário da Entidade

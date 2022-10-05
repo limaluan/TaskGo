@@ -160,7 +160,6 @@ export default function Entidades() {
               <h1
                 style={{
                   width: "100%",
-                  height: "100%",
                   textAlign: "center",
                   paddingTop: "2rem",
                 }}

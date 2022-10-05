@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { api } from "../../services/api";
-import { getGroups } from "../../services/hooks/useEntities";
+import { getGroups, useEntities } from "../../services/hooks/useEntities";
 import { IEntity } from "../../services/mirage";
 import { CreateEntityContainer } from "./styles";
 
@@ -16,11 +16,13 @@ export function EditEntityModal({
   onRequestClose,
   entity,
 }: ICreateEntityModalProps) {
+  const { data ,refetch } = useEntities();
+  
   let [groups, setGroups] = useState<IEntity[]>([]);
 
   useEffect(() => {
     getGroups().then((groupsData) => setGroups(groupsData));
-  }, []);
+  }, [data]);
 
   const [newGroupId, setNewGroupId] = useState("");
   const [editErrorMsg, setEditErrorMsg] = useState("");
@@ -48,6 +50,7 @@ export function EditEntityModal({
     setNewName("");
     setNewGroupId("");
     setEditErrorMsg("");
+    refetch();
     return onRequestClose();
   };
 

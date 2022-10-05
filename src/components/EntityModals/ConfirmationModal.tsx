@@ -1,5 +1,6 @@
 import Modal from "react-modal";
 import { api } from "../../services/api";
+import { useEntities } from "../../services/hooks/useEntities";
 import { IEntity } from "../../services/mirage";
 import { CreateEntityContainer } from "./styles";
 
@@ -14,12 +15,17 @@ export function ConfirmationModal({
   onRequestClose,
   entity,
 }: ICreateEntityModalProps) {
+  const { refetch } = useEntities();
+
   const handleDeleteEntity = () => {
     try {
       api.delete(`/entities/${entity.id}`);
     } catch (e) {
       console.log(e);
     }
+
+    refetch();
+    return onRequestClose();
   };
 
   return (

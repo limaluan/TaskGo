@@ -1,4 +1,5 @@
 import { createServer, Factory, Model } from "miragejs";
+import { EditEntityModal } from "../../components/EntityModals/EditEntityModal";
 
 export interface IEntity {
   id: string;
@@ -85,6 +86,8 @@ export function makeServer() {
 
       this.delete("/entities/:id", (schema, request): any => {
         const id = request.params.id;
+
+        schema.where("entity", entity => entity.group === id).destroy();
 
         return schema.find("entity", id)?.destroy();
       });
