@@ -2,7 +2,7 @@ import Head from "next/head";
 import { EntidadesContainer } from "./styles";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEntities } from "../../services/hooks/useEntities";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IEntity } from "../../services/mirage";
 import { ConfirmationModal } from "../../components/Modals/EntityModals/ConfirmationModal";
 import { CreateEntityModal } from "../../components/Modals/EntityModals/CreateEntityModal";

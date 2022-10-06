@@ -27,7 +27,7 @@ export function EditTaskModal({
   const [errorMsg, setErrorMsg] = useState("");
 
   const { refetch: refetchTasks } = useTasks();
-  
+
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
@@ -52,6 +52,15 @@ export function EditTaskModal({
     });
   };
 
+  function eraseData() {
+    setErrorMsg("");
+    setNewGroupId("");
+    setNewTaskDescription("");
+    setNewUserId("");
+    refetchTasks();
+    return onRequestClose();
+  }
+
   const handleEditTask = async () => {
     try {
       await api.put("/tasks", {
@@ -64,12 +73,43 @@ export function EditTaskModal({
       return setErrorMsg(e.response.data.message + "*");
     }
 
-    setErrorMsg("");
-    setNewGroupId("");
-    setNewTaskDescription("");
-    setNewUserId("");
-    refetchTasks();
-    return onRequestClose();
+    return eraseData();
+  };
+
+  const handleApprove = async () => {
+    try {
+      await api.put("/tasks", {
+        ...task,
+        state: "aprovada",
+      });
+    } catch (e: any) {
+      return console.log(e);
+    }
+
+    return eraseData();
+  };
+
+  const handleReject = async () => {
+    try {
+      await api.put("/tasks", {
+        ...task,
+        state: "rejeitada",
+      });
+    } catch (e: any) {
+      return console.log(e);
+    }
+
+    return eraseData();
+  };
+
+  const handleDeleteTask = async () => {
+    try {
+      await api.delete(`/tasks/${task?.id}`);
+    } catch (e) {
+      return console.log(e);
+    }
+
+    eraseData();
   };
 
   useEffect(() => {
@@ -154,20 +194,46 @@ export function EditTaskModal({
         </section>
         <p className="error-msg edit-mode off">{errorMsg}</p>
 
-        <button
-          className="approve-button edit-mode off"
-          onClick={handleEditTask}
-        >
-          Alterar Tarefa
-        </button>
-        <button className="edit-button" onClick={toggleEditMode}>
-          <span className="edit-mode">Editar</span>
-          <span className="edit-mode off">Voltar</span>
-        </button>
-        <div className="approve-section">
-          <button className="approve-button edit-mode">Aprovar</button>
-          <button className="reject-button edit-mode">Rejeitar</button>
-        </div>
+        {task?.state !== "pronto" &&
+        task?.state !== "rejeitada" &&
+        task?.state !== "aprovada" ? (
+          <>
+            <div className="approve-section">
+              <button
+                className="approve-button edit-mode"
+                onClick={handleApprove}
+              >
+                Aprovar
+              </button>
+              <button
+                className="reject-button edit-mode"
+                onClick={handleReject}
+              >
+                Rejeitar
+              </button>
+            </div>
+            <button
+              className="approve-button edit-mode off"
+              onClick={handleEditTask}
+            >
+              Alterar Tarefa
+            </button>
+            <button className="edit-button" onClick={toggleEditMode}>
+              <span className="edit-mode">Editar</span>
+              <span className="edit-mode off">Voltar</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className="reject-button edit-mode"
+              onClick={handleDeleteTask}
+            >
+              Excluir Tarefa
+            </button>
+          </>
+        )}
+
         <button className="cancel-button" onClick={onRequestClose}>
           Cancelar
         </button>

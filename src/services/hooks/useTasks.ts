@@ -15,7 +15,7 @@ export async function getTasks(): Promise<ITask[]> {
       ...task,
       id: task.id,
       description: task.description,
-      state: task.state !== "pronto" && diffTime < 1 ? "atrasada" : task.state,
+      state: task.state !== "aprovada" && task.state !== "rejeitada" && diffTime <= 1 ? "atrasada" : task.state,
       time_to_finish: Math.floor(diffTime / (1000 * 60)),
     };
   });

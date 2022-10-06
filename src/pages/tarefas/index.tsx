@@ -74,18 +74,18 @@ export default function Tarefas() {
                     <h3>{task.description}</h3>
                   </div>
                   <div className={`task-state ${task.state}`}>
-                    <h3>{task.state}</h3>
-                    {task.state === "afazer" ? (
+                    <h3>{task.state.toUpperCase()}</h3>
+                    {task.state === "fazer" ? (
                       <p>[ {task.time_to_finish} Min ]</p>
                     ) : (
                       <></>
                     )}
                   </div>
                   <div className="task-user">
-                    <h3>Usuário</h3>
+                    <h3>{task.user?.name ? task.user?.name : "---"}</h3>
                   </div>
                   <div className="task-description">
-                    <h3>Grupo</h3>
+                    <h3>{task.group?.name ? task.group?.name : "---"}</h3>
                   </div>
                 </div>
                 <hr />

@@ -102,32 +102,36 @@ export const GlobalStyles = createGlobalStyle`
       padding: 1rem;
     }
     
-  .error-msg {
-    color: var(--red);
-    font-size: 1.2rem;
-  }
-  
-    /* Esilização de Estados de Tarefa */
-  .afazer {
-    color: var(--yellow);
-  }
-  
-  .fazendo {
-    color: blue;
-  }
+    .error-msg {
+      color: var(--red);
+      font-size: 1.2rem;
+    }
+    
+      /* Esilização de Estados de Tarefa */
+    .fazer {
+      color: var(--yellow);
+    }
+    
+    .fazendo {
+      color: blue;
+    }
 
-  .pronto {
-    color: var(--green);
-  }
+    .pronto {
+      color: var(--green);
+    }
 
-  .rejeitada {
-    color: var(--red);
-  }
+    .aprovada {
+      color: var(--green);
+    }
 
-  .atrasada {
-    color: var(--yellow);
-  }
-  
+    .rejeitada {
+      color: var(--red);
+    }
+
+    .atrasada {
+      color: orange;
+    }
+    
   .expanded { /* Classe usada para indicar quais elementos irão se expandir ao recolher a sidenav */
     width: calc(100% - 24rem);
     float: right;

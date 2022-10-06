@@ -13,8 +13,14 @@ export interface ITask {
   id: string;
   description: string;
   state: string;
-  user_id: string;
-  group_id: string;
+  user: {
+    id: string;
+    name: string;
+  };
+  group: {
+    id: string;
+    name: string;
+  };
   created_at: string;
   time_to_finish: string;
 }
@@ -111,7 +117,7 @@ export function makeServer() {
         const id = request.params.id;
 
         schema.where("entity", (entity) => entity.group === id).destroy();
-        schema.where("task", (task) => task.group_id === id).destroy();
+        schema.where("task", (task) => task.group?.id === id).destroy();
 
         return schema.find("entity", id)?.destroy();
       });
@@ -138,8 +144,19 @@ export function makeServer() {
         return schema.create("task", {
           ...data,
           id: Math.ceil(Math.random() * 10000),
-          state: "afazer",
-          user_id: data.user_id ? data.user_id : "---",
+          state: "fazer",
+          user: {
+            id: data.user_id,
+            name: data.user_id
+              ? schema.findBy("entity", { id: data.user_id })?.name
+              : "---",
+          },
+          group: {
+            id: data.group_id,
+            name: data.group_id
+              ? schema.findBy("entity", { id: data.group_id })?.name
+              : "---",
+          },
           time_to_finish: new Date(
             date1.getTime() + Number(data.time_to_finish) * 60 * 1000
           ),
@@ -156,9 +173,15 @@ export function makeServer() {
         if (data.group_id == "") {
           throw Error("A tarefa deve ser associada com um grupo.");
         }
-        
-        return schema.findBy("task", {id: data.id})?.update(data);
-      })
+
+        return schema.findBy("task", { id: data.id })?.update(data);
+      });
+
+      this.delete("/tasks/:id", (schema, request): any => {
+        const id = request.params.id;
+
+        return schema.find("task", id)?.destroy();
+      });
       this.namespace = "";
       this.passthrough();
     },
