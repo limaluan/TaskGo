@@ -1,14 +1,24 @@
 import Head from "next/head";
 import { useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { CreateTaskModal } from "../../components/TaskModal/CreateTaskModal";
+import { CreateTaskModal } from "../../components/Modals/TaskModal/CreateTaskModal";
+import { EditTaskModal } from "../../components/Modals/TaskModal/TaskModal";
 import { useTasks } from "../../services/hooks/useTasks";
+import { ITask } from "../../services/mirage";
 import { TarefasContainer } from "./styles";
 
 export default function Tarefas() {
   const { data: tasks, isLoading, error } = useTasks();
 
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
+  const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
+
+  const [taskSelected, setTaskSelected] = useState<ITask>();
+
+  function handleEditTask(task: ITask) {
+    setTaskSelected(task);
+    return setIsEditTaskModalOpen(true);
+  }
 
   return (
     <main className="expanded">
@@ -25,7 +35,7 @@ export default function Tarefas() {
           <i className="material-icons">add</i>
           Criar Nova
         </button>
-        
+
         <input type="text" placeholder="Pesquisar Tarefa" />
 
         {/* Cabeçalho */}
@@ -57,17 +67,18 @@ export default function Tarefas() {
         ) : (
           <>
             {tasks?.map((task) => (
-              <div key={task.id}>
+              <div key={task.id} onClick={() => handleEditTask(task)}>
                 <div className="task">
                   <div className="task-description">
                     <h3>{task.description}</h3>
                   </div>
                   <div className={`task-state ${task.state}`}>
                     <h3>{task.state}</h3>
-                    {task.state === "afazer"
-                    ? <p>[ {task.time_to_finish} Min ]</p>
-                    : <></>
-                    }
+                    {task.state === "afazer" ? (
+                      <p>[ {task.time_to_finish} Min ]</p>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <div className="task-user">
                     <h3>Usuário</h3>
@@ -85,6 +96,11 @@ export default function Tarefas() {
         <CreateTaskModal
           isOpen={isCreateTaskModalOpen}
           onRequestClose={() => setIsCreateTaskModalOpen(false)}
+        />
+        <EditTaskModal
+          isOpen={isEditTaskModalOpen}
+          onRequestClose={() => setIsEditTaskModalOpen(false)}
+          task={taskSelected}
         />
       </TarefasContainer>
     </main>

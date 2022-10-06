@@ -6,6 +6,7 @@ export async function getTasks(): Promise<ITask[]> {
   const { data } = await api.get("/tasks");
 
   const tasks = data.tasks.map((task: ITask) => {
+    // Tratamento para obter o tempo restante parta fazer a tarefa
     const date1: any = new Date();
     const date2: any = new Date(task.time_to_finish);
     const diffTime = Math.ceil(date2 - date1);

@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { api } from "../../services/api";
-import { useEntities, getGroups } from "../../services/hooks/useEntities";
-import { IEntity } from "../../services/mirage";
-import { CreateEntityContainer } from "./styles";
+import { api } from "../../../services/api";
+import { useEntities, getGroups } from "../../../services/hooks/useEntities";
+import { IEntity } from "../../../services/mirage";
+import { ModalContainer } from "./styles";
 
 interface ICreateEntityModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export function CreateEntityModal({
   // Ativa e desativa a seção de selecionar Grupos ao trocar de tipo de entidade
   const handleEntityTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value);
-    document.querySelector(".group-section")?.classList.toggle("off");
+    document.querySelector(".select-section")?.classList.toggle("off");
     document.querySelector("#group-section-title")?.classList.toggle("off");
     document.querySelector("#id")?.classList.toggle("off");
   };
@@ -81,7 +81,7 @@ export function CreateEntityModal({
       overlayClassName="modal-overlay"
       ariaHideApp={false}
     >
-      <CreateEntityContainer>
+      <ModalContainer>
         <h1>Criar {type === "group" ? "Grupo" : "Usuário"}</h1>
         <form>
           <div className="type">
@@ -141,7 +141,7 @@ export function CreateEntityModal({
           <i className="material-icons">add</i>
           Criar
         </button>
-      </CreateEntityContainer>
+      </ModalContainer>
     </Modal>
   );
 }

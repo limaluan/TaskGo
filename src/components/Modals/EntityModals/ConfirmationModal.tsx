@@ -1,8 +1,8 @@
 import Modal from "react-modal";
-import { api } from "../../services/api";
-import { useEntities } from "../../services/hooks/useEntities";
-import { IEntity } from "../../services/mirage";
-import { CreateEntityContainer } from "./styles";
+import { api } from "../../../services/api";
+import { useEntities } from "../../../services/hooks/useEntities";
+import { IEntity } from "../../../services/mirage";
+import { ModalContainer } from "./styles";
 
 interface ICreateEntityModalProps {
   isOpen: boolean;
@@ -36,18 +36,18 @@ export function ConfirmationModal({
       overlayClassName="modal-overlay"
       ariaHideApp={false}
     >
-      <CreateEntityContainer>
+      <ModalContainer>
         <h1>Deseja remover {entity.name}?</h1>
         <button
           onClick={handleDeleteEntity}
-          style={{ padding: "1rem", backgroundColor: "red", color: "#ffffff" }}
+          className="cancel-button"
         >
           Remover
         </button>
         <button onClick={onRequestClose} style={{ padding: "1rem" }}>
           Cancelar
         </button>
-      </CreateEntityContainer>
+      </ModalContainer>
     </Modal>
   );
 }

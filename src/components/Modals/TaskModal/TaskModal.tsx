@@ -1,44 +1,36 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { api } from "../../services/api";
-import {
-  getGroups,
-  getUsers,
-  useEntities,
-} from "../../services/hooks/useEntities";
-import { useTasks } from "../../services/hooks/useTasks";
-import { IEntity } from "../../services/mirage";
-import { CreateEntityContainer } from "../EntityModals/styles";
+import { api } from "../../../services/api";
+import { getGroups, getUsers } from "../../../services/hooks/useEntities";
+import { IEntity, ITask } from "../../../services/mirage";
+import { ModalContainer } from "./styles";
 
 interface ICreateTaskModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  task: ITask | undefined;
 }
 
-export function CreateTaskModal({
+export function EditTaskModal({
   isOpen,
   onRequestClose,
+  task,
 }: ICreateTaskModalProps) {
-  const { data: entities } = useEntities();
-  const { refetch: refetchTasks } = useTasks();
+  const [newTaskDescription, setNewTaskDescription] = useState("");
+  const [newUserId, setNewUserId] = useState("");
+  const [newGroupId, setNewGroupId] = useState("");
 
   let [groups, setGroups] = useState<IEntity[]>([]);
   let [users, setUsers] = useState<IEntity[]>([]);
 
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Formulário da Tarefa
-  const [description, setDescription] = useState("");
-  const [userId, setUserId] = useState("");
-  const [groupId, setGroupId] = useState("");
-  const [minutes, setMinutes] = useState("");
-
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
     });
 
-    setGroupId(groupId);
+    setNewGroupId(groupId);
     document.querySelector(`#group-${groupId}`)?.classList.add("selected");
   };
 
@@ -47,37 +39,34 @@ export function CreateTaskModal({
       card.classList.remove("selected");
     });
 
-    setUserId(userId);
+    setNewUserId(userId);
     document.querySelector(`#user-${userId}`)?.classList.add("selected");
   };
 
-  const handleSubmit = async () => {
-    const task = {
-      description,
-      user_id: userId,
-      group_id: groupId,
-      created_at: new Date(),
-      time_to_finish: minutes,
-    };
+  const toggleEditMode = () => {
+    document.querySelectorAll(".edit-mode").forEach((element) => {
+      element.classList.toggle("off");
+    });
+  };
 
+  const handleEditTask = async () => {
     try {
-      await api.post("/tasks", task);
+      await api.put("/tasks", {
+        ...task,
+        description: newTaskDescription,
+        user_id: newUserId,
+        group_id: newGroupId,
+      });
     } catch (e: any) {
       return setErrorMsg(e.response.data.message + "*");
     }
-
-    console.log(task);
-    setGroupId("");
-    setUserId("");
-    setDescription("");
-    refetchTasks();
-    return onRequestClose();
   };
 
   useEffect(() => {
+    setNewTaskDescription(task?.description || "");
     getGroups().then((groupsData) => setGroups(groupsData));
     getUsers().then((entitiesData) => setUsers(entitiesData));
-  }, [entities]);
+  }, [task]);
 
   return (
     <Modal
@@ -87,24 +76,26 @@ export function CreateTaskModal({
       overlayClassName="modal-overlay"
       ariaHideApp={false}
     >
-      <CreateEntityContainer>
-        <h1>Criar Tarefa</h1>
-        <input
-          type="text"
-          placeholder="Descrição da tarefa*"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Minutos para finalizar*"
-          value={minutes}
-          onChange={(e) => setMinutes(e.target.value)}
+      <ModalContainer>
+        <h1>
+          Tarefa <span>{task?.state}</span>
+        </h1>
+        <b className="task-description">Descrição:</b>
+        <p className="task-description edit-mode">{task?.description}</p>
+        <textarea
+          name="description"
+          id="description"
+          cols={30}
+          rows={10}
+          value={newTaskDescription}
+          placeholder="Descrição da Tarefa"
+          className="edit-mode off"
+          onChange={(e) => setNewTaskDescription(e.target.value)}
         />
 
         {/* Seção para selecionar Grupo */}
-        <h2>Selecione um grupo para a tarefa:*</h2>
-        <section className="select-section">
+        <h2 className="edit-mode off">Selecione um grupo para a tarefa:*</h2>
+        <section className="select-section edit-mode off">
           <div className="wrapper">
             {groups.length >= 1 ? (
               <>
@@ -125,10 +116,9 @@ export function CreateTaskModal({
             )}
           </div>
         </section>
-
         {/* Seção para selecionar usuário */}
-        <h2>Designe um usuário para tarefa:</h2>
-        <section className="select-section">
+        <h2 className="edit-mode off">Designe um usuário para tarefa:</h2>
+        <section className="select-section edit-mode off">
           <div className="wrapper">
             {users.length >= 1 ? (
               <>
@@ -152,11 +142,25 @@ export function CreateTaskModal({
           </div>
         </section>
         <p className="error-msg">{errorMsg}</p>
-        <button className="green-button" onClick={handleSubmit}>
-          <i className="material-icons">add</i>
-          Criar Tarefa
+
+        <button
+          className="approve-button edit-mode off"
+          onClick={handleEditTask}
+        >
+          Alterar Tarefa
         </button>
-      </CreateEntityContainer>
+        <button className="edit-button" onClick={toggleEditMode}>
+          <span className="edit-mode">Editar</span>
+          <span className="edit-mode off">Voltar</span>
+        </button>
+        <div className="approve-section">
+          <button className="approve-button edit-mode">Aprovar</button>
+          <button className="reject-button edit-mode">Rejeitar</button>
+        </div>
+        <button className="cancel-button" onClick={onRequestClose}>
+          Cancelar
+        </button>
+      </ModalContainer>
     </Modal>
   );
 }

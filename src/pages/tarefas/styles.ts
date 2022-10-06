@@ -53,27 +53,6 @@ export const TarefasContainer = styled.div`
     gap: 1rem;
   }
 
-  /* Esilização de Estados de Tarefa */
-  .afazer {
-    color: var(--yellow);
-  }
-  
-  .fazendo {
-    color: blue;
-  }
-
-  .pronto {
-    color: var(--green);
-  }
-
-  .rejeitada {
-    color: var(--red);
-  }
-
-  .atrasada {
-    color: var(--yellow);
-  }
-
   @media (max-width: 520px) {
     padding: 1rem;
 

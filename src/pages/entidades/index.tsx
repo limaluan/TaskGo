@@ -2,11 +2,11 @@ import Head from "next/head";
 import { EntidadesContainer } from "./styles";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEntities } from "../../services/hooks/useEntities";
-import { CreateEntityModal } from "../../components/EntityModals/CreateEntityModal";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IEntity } from "../../services/mirage";
-import { EditEntityModal } from "../../components/EntityModals/EditEntityModal";
-import { ConfirmationModal } from "../../components/EntityModals/ConfirmationModal";
+import { ConfirmationModal } from "../../components/Modals/EntityModals/ConfirmationModal";
+import { CreateEntityModal } from "../../components/Modals/EntityModals/CreateEntityModal";
+import { EditEntityModal } from "../../components/Modals/EntityModals/EditEntityModal";
 
 export default function Entidades() {
   const { data, isLoading, error } = useEntities(); // Pega os dados da entidade do Cache

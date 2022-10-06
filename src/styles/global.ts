@@ -22,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
         --green: #6ce679;
         --red: #E02041;
         --yellow: #FFCA05;
+        --blue: #47b5ff;
     }
 
     * {
@@ -94,23 +95,50 @@ export const GlobalStyles = createGlobalStyle`
       width: 12rem;
       color: #ffffff;
     }
+
+    .cancel-button {
+      background-color: var(--red);
+      color: #ffffff;
+      padding: 1rem;
+    }
     
   .error-msg {
     color: var(--red);
     font-size: 1.2rem;
   }
   
-    .expanded { /* Classe usada para indicar quais elementos irão se expandir ao recolher a sidenav */
-      width: calc(100% - 24rem);
-      float: right;
-      transition: width 0.5s;
-    }
+    /* Esilização de Estados de Tarefa */
+  .afazer {
+    color: var(--yellow);
+  }
+  
+  .fazendo {
+    color: blue;
+  }
 
-    .expanded.on {
-      width: 100%;
-    }
-    
-    .modal-overlay {
+  .pronto {
+    color: var(--green);
+  }
+
+  .rejeitada {
+    color: var(--red);
+  }
+
+  .atrasada {
+    color: var(--yellow);
+  }
+  
+  .expanded { /* Classe usada para indicar quais elementos irão se expandir ao recolher a sidenav */
+    width: calc(100% - 24rem);
+    float: right;
+    transition: width 0.5s;
+  }
+
+  .expanded.on {
+    width: 100%;
+  }
+  
+  .modal-overlay {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -146,7 +174,7 @@ export const GlobalStyles = createGlobalStyle`
         }
       }
   }
-    
+  
     @media (max-width: 540px) {
       .expanded {
         width: 100%;

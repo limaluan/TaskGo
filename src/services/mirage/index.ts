@@ -124,7 +124,7 @@ export function makeServer() {
           throw Error("A tarefa deve conter uma descrição.");
         }
 
-        if (Number(data.time_to_finish) <= 0) {
+        if (Number(data.time_to_finish) <= 0 || data.time_to_finish == "") {
           throw Error("Tempo inválido.");
         }
 

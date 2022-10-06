@@ -52,7 +52,7 @@ export const EntidadesContainer = styled.div`
 
     button {
       gap: 1rem;
-      background-color: #47b5ff;
+      background-color: var(--blue);
       border: 1px solid var(--gray-light);
       width: 10rem;
       color: #ffffff;

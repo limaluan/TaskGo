@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { api } from "../../services/api";
-import { getGroups, useEntities } from "../../services/hooks/useEntities";
-import { IEntity } from "../../services/mirage";
-import { CreateEntityContainer } from "./styles";
+import { api } from "../../../services/api";
+import { getGroups, useEntities } from "../../../services/hooks/useEntities";
+import { IEntity } from "../../../services/mirage";
+import { ModalContainer } from "./styles";
 
 interface ICreateEntityModalProps {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export function EditEntityModal({
       overlayClassName="modal-overlay"
       ariaHideApp={false}
     >
-      <CreateEntityContainer>
+      <ModalContainer>
         <h1>Editar</h1>
         <input
           type="text"
@@ -97,7 +97,7 @@ export function EditEntityModal({
           <i className="material-icons">add</i>
           Editar
         </button>
-      </CreateEntityContainer>
+      </ModalContainer>
     </Modal>
   );
 }
