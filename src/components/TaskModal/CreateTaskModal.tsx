@@ -6,6 +6,7 @@ import {
   getUsers,
   useEntities,
 } from "../../services/hooks/useEntities";
+import { useTasks } from "../../services/hooks/useTasks";
 import { IEntity } from "../../services/mirage";
 import { CreateEntityContainer } from "../EntityModals/styles";
 
@@ -18,7 +19,8 @@ export function CreateTaskModal({
   isOpen,
   onRequestClose,
 }: ICreateTaskModalProps) {
-  const { data: entities, refetch } = useEntities();
+  const { data: entities } = useEntities();
+  const { refetch: refetchTasks } = useTasks();
 
   let [groups, setGroups] = useState<IEntity[]>([]);
   let [users, setUsers] = useState<IEntity[]>([]);
@@ -29,6 +31,7 @@ export function CreateTaskModal({
   const [description, setDescription] = useState("");
   const [userId, setUserId] = useState("");
   const [groupId, setGroupId] = useState("");
+  const [minutes, setMinutes] = useState("");
 
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
@@ -54,6 +57,7 @@ export function CreateTaskModal({
       user_id: userId,
       group_id: groupId,
       created_at: new Date(),
+      time_to_finish: minutes,
     };
 
     try {
@@ -66,8 +70,8 @@ export function CreateTaskModal({
     setGroupId("");
     setUserId("");
     setDescription("");
-    refetch();
-    onRequestClose();
+    refetchTasks();
+    return onRequestClose();
   };
 
   useEffect(() => {
@@ -91,6 +95,12 @@ export function CreateTaskModal({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <input
+          type="number"
+          placeholder="Minutos para finalizar*"
+          value={minutes}
+          onChange={(e) => setMinutes(e.target.value)}
+        />
 
         {/* Seção para selecionar Grupo */}
         <h2>Selecione um grupo para a tarefa:*</h2>
@@ -111,9 +121,7 @@ export function CreateTaskModal({
                 ))}
               </>
             ) : (
-              <h1 style={{ padding: "1rem 0" }}>
-                Não há grupos cadastrados.
-              </h1>
+              <h1 style={{ padding: "1rem 0" }}>Não há grupos cadastrados.</h1>
             )}
           </div>
         </section>

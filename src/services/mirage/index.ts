@@ -16,6 +16,7 @@ export interface ITask {
   user_id: string;
   group_id: string;
   created_at: string;
+  time_to_finish: string;
 }
 
 export function makeServer() {
@@ -60,7 +61,7 @@ export function makeServer() {
     },
 
     seeds(server) {
-      // server.createList("entity", 10);
+      server.createList("entity", 10);
       server.createList("task", 5);
     },
 
@@ -123,6 +124,12 @@ export function makeServer() {
           throw Error("A tarefa deve conter uma descrição.");
         }
 
+        if (Number(data.time_to_finish) <= 0) {
+          throw Error("Tempo inválido.");
+        }
+
+        const date1: any = new Date();
+
         if (data.group_id === "") {
           throw Error("A tarefa deve ser associada com um grupo.");
         }
@@ -130,11 +137,13 @@ export function makeServer() {
         return schema.create("task", {
           ...data,
           id: Math.ceil(Math.random() * 10000),
-          state: "A Fazer",
+          state: "afazer",
           user_id: data.user_id ? data.user_id : "---",
+          time_to_finish: new Date(
+            date1.getTime() + Number(data.time_to_finish) * 60 * 1000
+          ),
         });
       });
-
       this.namespace = "";
       this.passthrough();
     },

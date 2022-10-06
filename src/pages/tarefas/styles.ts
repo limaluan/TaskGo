@@ -30,7 +30,8 @@ export const TarefasContainer = styled.div`
     }
   }
 
-  > .task { /* Retira o hover do Cabeçalho */
+  > .task {
+    /* Retira o hover do Cabeçalho */
     :hover {
       background-color: #ffffff;
       cursor: default;
@@ -50,6 +51,27 @@ export const TarefasContainer = styled.div`
     width: fit-content;
     display: flex;
     gap: 1rem;
+  }
+
+  /* Esilização de Estados de Tarefa */
+  .afazer {
+    color: var(--yellow);
+  }
+  
+  .fazendo {
+    color: blue;
+  }
+
+  .pronto {
+    color: var(--green);
+  }
+
+  .rejeitada {
+    color: var(--red);
+  }
+
+  .atrasada {
+    color: var(--yellow);
   }
 
   @media (max-width: 520px) {

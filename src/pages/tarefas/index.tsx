@@ -25,6 +25,8 @@ export default function Tarefas() {
           <i className="material-icons">add</i>
           Criar Nova
         </button>
+        
+        <input type="text" placeholder="Pesquisar Tarefa" />
 
         {/* Cabeçalho */}
         <div className="task">
@@ -60,8 +62,12 @@ export default function Tarefas() {
                   <div className="task-description">
                     <h3>{task.description}</h3>
                   </div>
-                  <div className="task-description">
+                  <div className={`task-state ${task.state}`}>
                     <h3>{task.state}</h3>
+                    {task.state === "afazer"
+                    ? <p>[ {task.time_to_finish} Min ]</p>
+                    : <></>
+                    }
                   </div>
                   <div className="task-user">
                     <h3>Usuário</h3>

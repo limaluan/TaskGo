@@ -1,15 +1,20 @@
-import { ITask } from './../mirage/index';
+import { ITask } from "./../mirage/index";
 import { useQuery } from "react-query";
 import { api } from "../api";
 
 export async function getTasks(): Promise<ITask[]> {
   const { data } = await api.get("/tasks");
 
-  const tasks = data.tasks.map((task: any) => {
+  const tasks = data.tasks.map((task: ITask) => {
+    const date1: any = new Date();
+    const date2: any = new Date(task.time_to_finish);
+    const diffTime = Math.ceil(date2 - date1);
+
     return {
       id: task.id,
       description: task.description,
-      state: task.state,
+      state: task.state !== "pronto" && diffTime < 1 ? "atrasada" : task.state,
+      time_to_finish: Math.floor(diffTime / (1000 * 60)),
     };
   });
 
@@ -20,5 +25,6 @@ export async function getTasks(): Promise<ITask[]> {
 export function useTasks() {
   return useQuery("tasks", getTasks, {
     staleTime: 1000 * 5 /* 5 Segundos */,
+    refetchInterval: 1000 * 60 /* 1 Minuto */,
   });
 }
