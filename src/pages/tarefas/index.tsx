@@ -3,7 +3,6 @@ import { useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { CreateTaskModal } from "../../components/Modals/TaskModal/CreateTaskModal";
 import { EditTaskModal } from "../../components/Modals/TaskModal/TaskModal";
-import { getUserById } from "../../services/hooks/useEntities";
 import { useTasks } from "../../services/hooks/useTasks";
 import { ITask } from "../../services/mirage";
 import { TarefasContainer } from "./styles";
@@ -21,6 +20,8 @@ export default function Tarefas() {
     return setIsEditTaskModalOpen(true);
   }
 
+  const [search, setSearch] = useState("");
+
   return (
     <main className="expanded">
       <Head>
@@ -37,7 +38,13 @@ export default function Tarefas() {
           Criar Nova
         </button>
 
-        <input type="text" placeholder="Pesquisar Tarefa" />
+        <input
+          type="text"
+          placeholder="Pesquisar Tarefa"
+          className="task-search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
         {/* Cabeçalho */}
         <div className="task">
@@ -67,30 +74,39 @@ export default function Tarefas() {
           <h1>Não foi possível carregar a lista de Entidades.</h1>
         ) : (
           <>
-            {tasks?.map((task) => (
-              <div key={task.id} onClick={() => handleEditTask(task)}>
-                <div className="task">
-                  <div className="task-description">
-                    <h3>{task.description}</h3>
+            {tasks
+              ?.filter((task) => {
+                // Filtra de acordo com a busca do usuário
+                return search.toLowerCase() === ""
+                  ? task
+                  : task.description
+                      .toLowerCase()
+                      .includes(search.toLowerCase());
+              })
+              .map((task) => (
+                <div key={task.id} onClick={() => handleEditTask(task)}>
+                  <div className="task">
+                    <div className="task-description">
+                      <h3>{task.description}</h3>
+                    </div>
+                    <div className={`task-state ${task.state}`}>
+                      <h3>{task.state.toUpperCase()}</h3>
+                      {task.state === "fazer" ? (
+                        <p>[ {task.time_to_finish} Min ]</p>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="task-user">
+                      <h3>{task.user?.name ? task.user?.name : "---"}</h3>
+                    </div>
+                    <div className="task-description">
+                      <h3>{task.group?.name ? task.group?.name : "---"}</h3>
+                    </div>
                   </div>
-                  <div className={`task-state ${task.state}`}>
-                    <h3>{task.state.toUpperCase()}</h3>
-                    {task.state === "fazer" ? (
-                      <p>[ {task.time_to_finish} Min ]</p>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="task-user">
-                    <h3>{task.user?.name ? task.user?.name : "---"}</h3>
-                  </div>
-                  <div className="task-description">
-                    <h3>{task.group?.name ? task.group?.name : "---"}</h3>
-                  </div>
+                  <hr />
                 </div>
-                <hr />
-              </div>
-            ))}
+              ))}
           </>
         )}
 

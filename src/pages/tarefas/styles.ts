@@ -7,6 +7,11 @@ export const TarefasContainer = styled.div`
   background-color: #ffffff;
   overflow-y: scroll;
 
+  .task-search {
+    width: 100%;
+    margin: 1rem auto;
+  }
+  
   .page-title {
     font-size: 4rem;
     font-family: "Poppins", sans-serif;
