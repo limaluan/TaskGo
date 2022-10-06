@@ -111,6 +111,7 @@ export function makeServer() {
         const id = request.params.id;
 
         schema.where("entity", (entity) => entity.group === id).destroy();
+        schema.where("task", (task) => task.group_id === id).destroy();
 
         return schema.find("entity", id)?.destroy();
       });
@@ -144,6 +145,20 @@ export function makeServer() {
           ),
         });
       });
+
+      this.put("/tasks", (schema, request): any => {
+        const data = JSON.parse(request.requestBody);
+
+        if (data.description == "") {
+          throw Error("A tarefa deve conter uma descrição.");
+        }
+
+        if (data.group_id == "") {
+          throw Error("A tarefa deve ser associada com um grupo.");
+        }
+        
+        return schema.findBy("task", {id: data.id})?.update(data);
+      })
       this.namespace = "";
       this.passthrough();
     },

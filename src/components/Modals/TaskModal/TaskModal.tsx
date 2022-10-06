@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { api } from "../../../services/api";
 import { getGroups, getUsers } from "../../../services/hooks/useEntities";
+import { useTasks } from "../../../services/hooks/useTasks";
 import { IEntity, ITask } from "../../../services/mirage";
 import { ModalContainer } from "./styles";
 
@@ -25,6 +26,8 @@ export function EditTaskModal({
 
   const [errorMsg, setErrorMsg] = useState("");
 
+  const { refetch: refetchTasks } = useTasks();
+  
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
@@ -60,12 +63,20 @@ export function EditTaskModal({
     } catch (e: any) {
       return setErrorMsg(e.response.data.message + "*");
     }
+
+    setErrorMsg("");
+    setNewGroupId("");
+    setNewTaskDescription("");
+    setNewUserId("");
+    refetchTasks();
+    return onRequestClose();
   };
 
   useEffect(() => {
     setNewTaskDescription(task?.description || "");
     getGroups().then((groupsData) => setGroups(groupsData));
     getUsers().then((entitiesData) => setUsers(entitiesData));
+    setErrorMsg("");
   }, [task]);
 
   return (
@@ -141,7 +152,7 @@ export function EditTaskModal({
             )}
           </div>
         </section>
-        <p className="error-msg">{errorMsg}</p>
+        <p className="error-msg edit-mode off">{errorMsg}</p>
 
         <button
           className="approve-button edit-mode off"

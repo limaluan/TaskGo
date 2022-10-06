@@ -3,6 +3,7 @@ import { useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { CreateTaskModal } from "../../components/Modals/TaskModal/CreateTaskModal";
 import { EditTaskModal } from "../../components/Modals/TaskModal/TaskModal";
+import { getUserById } from "../../services/hooks/useEntities";
 import { useTasks } from "../../services/hooks/useTasks";
 import { ITask } from "../../services/mirage";
 import { TarefasContainer } from "./styles";

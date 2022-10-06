@@ -12,6 +12,7 @@ export async function getTasks(): Promise<ITask[]> {
     const diffTime = Math.ceil(date2 - date1);
 
     return {
+      ...task,
       id: task.id,
       description: task.description,
       state: task.state !== "pronto" && diffTime < 1 ? "atrasada" : task.state,

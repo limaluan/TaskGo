@@ -7,16 +7,12 @@ export async function getEntities(): Promise<IEntity[]> {
 
   const entities = data.entities.map((entity: any) => {
     return {
-      id: entity.id,
-      name: entity.name,
-      type: entity.type,
+      ...entity,
       createdAt: new Date(entity.created_at).toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long",
         year: "numeric",
       }),
-      group: entity.group,
-      tasks: entity.tasks,
     };
   });
 
@@ -31,9 +27,25 @@ export async function getGroups() {
   return groups;
 }
 
+export async function getGroupById(groupId: string) {
+  const groups = (await getEntities()).filter(
+    (entity) => entity.type === "group" && entity.id === groupId
+  );
+
+  return groups;
+}
+
 export async function getUsers() {
   const users = (await getEntities()).filter(
     (entity) => entity.type !== "group"
+  );
+
+  return users;
+}
+
+export async function getUserById(userId: string) {
+  const users = (await getEntities()).filter(
+    (entity) => entity.type !== "group" && entity.id === userId
   );
 
   return users;
