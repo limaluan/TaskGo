@@ -2,7 +2,6 @@ import {
   createContext,
   ReactNode,
   useEffect,
-  useLayoutEffect,
   useState,
 } from "react";
 import { api } from "../services/api";
@@ -31,7 +30,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     getTasksByUser(user.id).then((response) => {
       setUsersTasks(response);
     });
-  }, [tasksData, user]);
+  }, [tasksData]);
 
   async function signIn(userId: string): Promise<any> {
     try {

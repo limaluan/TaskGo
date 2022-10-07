@@ -194,10 +194,7 @@ export function EditTaskModal({
         </section>
         <p className="error-msg edit-mode off">{errorMsg}</p>
 
-        {task?.state !== "pronto" &&
-        task?.state !== "rejeitada" &&
-        task?.state !== "aprovada" &&
-        task?.state !== "atrasada" ? (
+        {task?.state === "pronta" ? (
           <>
             <div className="approve-section">
               <button

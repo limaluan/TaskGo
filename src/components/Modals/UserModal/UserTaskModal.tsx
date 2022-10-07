@@ -29,6 +29,19 @@ export function UserTaskModal({
     return onRequestClose();
   };
 
+
+  const handleDoneTask = async () => {
+    try {
+      await api.put("/tasks", {
+        ...task,
+        state: "pronta",
+      });
+    } catch (e: any) {}
+
+    refetchTasks();
+    return onRequestClose();
+  };
+  
   return (
     <Modal
       isOpen={isOpen}
@@ -52,7 +65,7 @@ export function UserTaskModal({
           <>
             <button
               className="approve-button"
-              // onClick={handleDeleteTask}
+              onClick={handleDoneTask}
             >
               Pronta
             </button>
