@@ -210,6 +210,9 @@ export function EditTaskModal({
                 Rejeitar
               </button>
             </div>
+          </>
+        ) : (
+          <>
             <button
               className="approve-button edit-mode off"
               onClick={handleEditTask}
@@ -220,9 +223,6 @@ export function EditTaskModal({
               <span className="edit-mode">Editar</span>
               <span className="edit-mode off">Voltar</span>
             </button>
-          </>
-        ) : (
-          <>
             <button
               className="reject-button edit-mode"
               onClick={handleDeleteTask}

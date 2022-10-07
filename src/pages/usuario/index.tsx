@@ -37,7 +37,7 @@ export default function Usuario() {
         </div>
         <hr />
 
-        {userTasks.map((task) => (
+        {userTasks.length >= 1 ? userTasks.map((task) => (
           <div key={task.id} onClick={() => handleOpenTask(task)}>
             <div className="task">
               <div className="task-description">
@@ -54,7 +54,9 @@ export default function Usuario() {
             </div>
             <hr />
           </div>
-        ))}
+        )) : (
+          <h2>Não foi possível encontrar tarefas do usuário.</h2>
+        )}
         <UserTaskModal
           isOpen={isUserTaskModalOpen}
           onRequestClose={() => setIsTaskModalOpen(false)}

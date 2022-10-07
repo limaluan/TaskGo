@@ -58,7 +58,7 @@ export function UserTaskModal({
         {task?.state === "fazer" ? (
           <>
             <button className="approve-button" onClick={handleDoingTask}>
-              Fazendo
+              Associar
             </button>
           </>
         ) : task.state === "fazendo" ? (
@@ -67,7 +67,7 @@ export function UserTaskModal({
               className="approve-button"
               onClick={handleDoneTask}
             >
-              Pronta
+              Finalizar Tarefa
             </button>
           </>
         ) : (

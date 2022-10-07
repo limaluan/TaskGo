@@ -74,39 +74,43 @@ export default function Tarefas() {
           <h1>Não foi possível carregar a lista de Entidades.</h1>
         ) : (
           <>
-            {tasks
-              ?.filter((task) => {
-                // Filtra de acordo com a busca do usuário
-                return search.toLowerCase() === ""
-                  ? task
-                  : task.description
-                      .toLowerCase()
-                      .includes(search.toLowerCase());
-              })
-              .map((task) => (
-                <div key={task.id} onClick={() => handleEditTask(task)}>
-                  <div className="task">
-                    <div className="task-description">
-                      <h3>{task.description}</h3>
+            {tasks!.length >= 1 ? (
+              tasks
+                ?.filter((task) => {
+                  // Filtra de acordo com a busca do usuário
+                  return search.toLowerCase() === ""
+                    ? task
+                    : task.description
+                        .toLowerCase()
+                        .includes(search.toLowerCase());
+                })
+                .map((task) => (
+                  <div key={task.id} onClick={() => handleEditTask(task)}>
+                    <div className="task">
+                      <div className="task-description">
+                        <h3>{task.description}</h3>
+                      </div>
+                      <div className={`task-state ${task.state}`}>
+                        <h3>{task.state.toUpperCase()}</h3>
+                        {task.state === "fazer" ? (
+                          <p>[ {task.reimaing_time} Min ]</p>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className="task-user">
+                        <h3>{task.user?.name ? task.user?.name : "---"}</h3>
+                      </div>
+                      <div className="task-description">
+                        <h3>{task.group?.name ? task.group?.name : "---"}</h3>
+                      </div>
                     </div>
-                    <div className={`task-state ${task.state}`}>
-                      <h3>{task.state.toUpperCase()}</h3>
-                      {task.state === "fazer" ? (
-                        <p>[ {task.reimaing_time} Min ]</p>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className="task-user">
-                      <h3>{task.user?.name ? task.user?.name : "---"}</h3>
-                    </div>
-                    <div className="task-description">
-                      <h3>{task.group?.name ? task.group?.name : "---"}</h3>
-                    </div>
+                    <hr />
                   </div>
-                  <hr />
-                </div>
-              ))}
+                ))
+            ) : (
+              <h1>Não foi possível encontrar tarefas.</h1>
+            )}
           </>
         )}
 
