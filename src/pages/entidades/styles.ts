@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const EntidadesContainer = styled.div`
   height: 92vh;
-  background-color: cornflowerblue;
   padding: 3rem;
   background-color: #ffffff;
   overflow-y: scroll;

@@ -72,7 +72,7 @@ export function EditEntityModal({
         />
         {entity.type === "user" ? (
           <>
-            <h1>Selecione um grupo*</h1>
+            <h1>Mover para o grupo:</h1>
             <section className="select-section">
               <div className="wrapper">
                 {groups.map((group) => (

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Header } from "../components/Header";
 import { Sidenav } from "../components/Sidenav";
+import { UserAuthProvider } from "../contexts/UserContext";
 import { makeServer } from "../services/mirage";
 import { GlobalStyles } from "../styles/global";
 
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
-      <Sidenav />
-      <Component {...pageProps} />
-      <GlobalStyles />
+      <UserAuthProvider>
+        <Sidenav />
+        <Component {...pageProps} />
+      </UserAuthProvider>
 
       <ReactQueryDevtools />
+      <GlobalStyles />
     </QueryClientProvider>
   );
 }

@@ -196,7 +196,8 @@ export function EditTaskModal({
 
         {task?.state !== "pronto" &&
         task?.state !== "rejeitada" &&
-        task?.state !== "aprovada" ? (
+        task?.state !== "aprovada" &&
+        task?.state !== "atrasada" ? (
           <>
             <div className="approve-section">
               <button

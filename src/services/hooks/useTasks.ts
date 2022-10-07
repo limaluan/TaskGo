@@ -15,10 +15,19 @@ export async function getTasks(): Promise<ITask[]> {
       ...task,
       id: task.id,
       description: task.description,
-      state: task.state !== "aprovada" && task.state !== "rejeitada" && diffTime <= 1 ? "atrasada" : task.state,
+      state:
+        task.state !== "aprovada" && task.state !== "rejeitada" && diffTime <= 1
+          ? "atrasada"
+          : task.state,
       time_to_finish: Math.floor(diffTime / (1000 * 60)),
     };
   });
+
+  return tasks;
+}
+
+export async function getTasksByUser(userId: string) {
+  const tasks = (await getTasks()).filter((task) => task.user?.id === userId);
 
   return tasks;
 }

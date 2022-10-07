@@ -1,7 +1,23 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { UserAuthenticateModal } from "../Modals/UserModal/UserAuthenticateModal";
 import { SidenavContainer } from "./styles";
 
 export function Sidenav() {
+  const [isUserAuthModalOpen, setIsUserAuthModalOpen] = useState(false);
+  const { user } = useContext(UserContext);
+  const { push: redirectsTo } = useRouter();
+
+  const handleUserLogin = () => {
+    if (!user.id) {
+      return setIsUserAuthModalOpen(true);
+    }
+
+    return redirectsTo(`/usuario`);
+  };
+
   return (
     <nav className="sidenav on">
       <SidenavContainer>
@@ -22,7 +38,7 @@ export function Sidenav() {
 
         {/* Sessão de Usuário */}
         <h3 className="subtitle">USUÁRIO</h3>
-        <a href="#" className="nav">
+        <a href="#" className="nav" onClick={handleUserLogin}>
           <i className="material-icons">account_circle</i>
           <h3>Usuário</h3>
         </a>
@@ -31,6 +47,11 @@ export function Sidenav() {
           <h3>Grupo</h3>
         </a>
       </SidenavContainer>
+
+      <UserAuthenticateModal
+        isOpen={isUserAuthModalOpen}
+        onRequestClose={() => setIsUserAuthModalOpen(false)}
+      />
     </nav>
   );
 }

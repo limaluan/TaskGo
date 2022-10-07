@@ -1,4 +1,5 @@
 import { createServer, Factory, Model } from "miragejs";
+import { userAgent } from "next/server";
 
 export interface IEntity {
   id: string;
@@ -124,6 +125,7 @@ export function makeServer() {
 
       // ROTAS DAS TAREFAS
       this.get("/tasks");
+
       this.post("tasks", (schema, request) => {
         const data = JSON.parse(request.requestBody);
 
@@ -182,6 +184,20 @@ export function makeServer() {
 
         return schema.find("task", id)?.destroy();
       });
+
+      // ROTAS DO USUÁRIO
+      this.get("/user/:id", (schema, request): any => {
+        const id = request.params.id;
+
+        const user = schema.find("entity", id);
+
+        if (!user) {
+          throw Error("ID incorreto.");
+        }
+
+        return user;
+      });
+
       this.namespace = "";
       this.passthrough();
     },
