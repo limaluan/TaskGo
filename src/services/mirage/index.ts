@@ -1,5 +1,4 @@
 import { createServer, Factory, Model } from "miragejs";
-import { userAgent } from "next/server";
 
 export interface IEntity {
   id: string;
@@ -24,13 +23,14 @@ export interface ITask {
   };
   created_at: string;
   time_to_finish: string;
+  reimaing_time: string;
 }
 
 export function makeServer() {
   const server = createServer({
     models: {
       entity: Model.extend<IEntity>({} as IEntity),
-      task: Model.extend<Partial<ITask>>({}),
+      task: Model.extend<ITask>({} as ITask),
     },
 
     factories: {
@@ -69,7 +69,7 @@ export function makeServer() {
 
     seeds(server) {
       server.createList("entity", 10);
-      server.createList("task", 5);
+      // server.createList("task", 5);
     },
 
     routes() {

@@ -11,15 +11,25 @@ export async function getTasks(): Promise<ITask[]> {
     const date2: any = new Date(task.time_to_finish);
     const diffTime = Math.ceil(date2 - date1);
 
+    let newState;
+
+    if (
+      (task.state === "fazer" || task.state === "fazendo") &&
+      Math.floor(diffTime) <= 1
+    ) {
+      console.log(task.state);
+      console.log(Math.floor(diffTime / (1000 * 60)));
+      newState = "atrasada";
+    } else {
+      newState = task.state;
+    }
+
     return {
       ...task,
       id: task.id,
       description: task.description,
-      state:
-        task.state !== "aprovada" && task.state !== "rejeitada" && diffTime <= 1
-          ? "atrasada"
-          : task.state,
-      time_to_finish: Math.floor(diffTime / (1000 * 60)),
+      state: newState,
+      reimaing_time: Math.floor(diffTime / (1000 * 60)),
     };
   });
 

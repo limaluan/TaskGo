@@ -67,4 +67,7 @@ export const UsuarioContainer = styled.div`
   .task-user {
   }
 
+  @media (max-width: 520px) {
+    padding: 1rem;
+  }
 `;
