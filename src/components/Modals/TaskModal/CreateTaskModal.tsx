@@ -83,6 +83,7 @@ export function CreateTaskModal({
 
   useEffect(() => {
     getGroups().then((groupsData) => setGroups(groupsData));
+
     refetchUsers();
   }, [entities]);
 
@@ -143,17 +144,19 @@ export function CreateTaskModal({
               <h1>Não foi possível carregar os usuários.</h1>
             ) : users && users.length >= 1 ? (
               <>
-                {users.map((user) => (
-                  <div
-                    className="user-card"
-                    key={user.id}
-                    id={`user-${user.id}`}
-                    onClick={() => setUserActive(user.id)}
-                  >
-                    <i className="material-icons">account_circle</i>
-                    <span>{user.name}</span>
-                  </div>
-                ))}
+                {users
+                  .filter((user) => user.group.id === groupId)
+                  .map((user) => (
+                    <div
+                      className="user-card"
+                      key={user.id}
+                      id={`user-${user.id}`}
+                      onClick={() => setUserActive(user.id)}
+                    >
+                      <i className="material-icons">account_circle</i>
+                      <span>{user.name}</span>
+                    </div>
+                  ))}
               </>
             ) : (
               <h1 style={{ padding: "1rem 0" }}>

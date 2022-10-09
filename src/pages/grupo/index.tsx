@@ -12,7 +12,7 @@ export default function Usuario() {
         <title>Usuário | TaskGo</title>
       </Head>
       <GrupoContainer>
-        <h1 className="page-title">Tarefas do Grupo {user.group.name}</h1>
+        <h1 className="page-title">Tarefas do Grupo {user.group?.name}</h1>
 
         {/* Cabeçalho */}
         <div className="entity">
