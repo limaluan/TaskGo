@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <a href="#-tecnologias utilizadas">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;
 </p>
@@ -12,7 +12,7 @@
   <img alt="TaskGo" src="https://imgur.com/rTBqw83.gif" width="100%">
 </p>
 
-## 🚀 Tecnologias Utilizadas
+## 🚀 Tecnologias
 
 <h2><img height="36px" src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png"/> NextJs</h2>
 
