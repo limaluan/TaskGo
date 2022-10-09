@@ -92,7 +92,7 @@ export function makeServer() {
           throw Error("ID Inválido ou já está em uso.");
         }
 
-        if (data.type === "user" && !data.group) {
+        if (data.type === "user" && !data.group.id) {
           throw Error("Deve associar Usuário com um Grupo.");
         }
 
@@ -115,10 +115,6 @@ export function makeServer() {
 
         if (!data.name) {
           throw Error("A Entidade deve conter um nome.");
-        }
-
-        if (data.type === "user" && !data.group) {
-          throw Error("Deve associar Usuário com um Grupo.");
         }
 
         return schema.findBy("entity", { id: data.id })?.update(data);

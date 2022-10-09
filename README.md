@@ -1,34 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+  <img alt="TaskGo" title="TaskGo" src="https://imgur.com/TOF9a8S.png" width="220px" />
+</h1>
 
-## Getting Started
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;
+</p>
 
-First, run the development server:
+<p align="center">
+  <img alt="TaskGo" src="https://imgur.com/rTBqw83.gif" width="100%">
+</p>
+
+## 🚀 Tecnologias Utilizadas
+
+<h2><img height="36px" src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png"/> NextJs</h2>
+
+<p>O <b>NextJs</b> é um framework para o <b>ReactJs</b> que oferece a possibildiade de criar uma API juntamente com o Front-End, além de trazer alguns beneficíos em questão de perfomance e obtenção de dados Server-Side.</p>
+<p>O <b>NextJs</b> foi utilizado visando a implementação futura de uma API real.</p>
+
+---
+
+<h2><img height="36px" src="https://avatars.githubusercontent.com/u/47899903?s=200&v=4"/> MirageJs</h2>
+
+<p>O <b>MirageJs</b> foi utilizado neste projeto, para criar uma FakeApi, visando
+a implementação de um back-end com uma API real e 100% funcional no futuro.</p>
+<p>Graças ao <b>MirageJs</b>, este projeto possui uma "API" simulada na qual pode-se
+criar códigos como se estivesse consumindo uma API real, assim quando houver uma
+API real apenas substituir a API Fake.</p>
+
+---
+
+<h2><img height="36px" src="https://seeklogo.com/images/R/react-query-logo-1340EA4CE9-seeklogo.com.png"> React Query</h2>
+
+<p>Com o <b>React Query</b> é possível salvar e manusear dados em cache de forma simples e intuitiva.</p>
+<p>O <b>React Query</b> foi utilizado para aumentar a performance e melhorar a experiência do usuário ao navegar entre as páginas da aplicação sem enfrentar carregamentos de dados repetidos.</p>
+
+---
+
+<h3>Outras tecnologias utilizadas:</h3>
+
+- TypeScript
+- ReactJs
+- Styled-Components
+- Axios
+- HTML
+
+<!-- ## 💻 Projeto -->
+
+## 📔 Projeto
+
+<p>O <b>DaskGo</b> é uma aplicação web feita para o gerenciamento de equipes, usuários e tarefas.</p>
+<p>Com o <b>DaskGo</b> é possível:</p>
+
+- Criar Usuários
+- Criar Grupos
+- Criar Tarefas
+- Associar Tarefas a usuários ou a grupos
+- Definir tempo para conclusão de tarefas
+- Acompanhamento em tempo real do estado das tarefas.
+
+## 🔖 Layout
+
+Você pode visualizar o layout base do projeto através [desse link](https://www.figma.com/file/zcoIozWpxNXDr5briiw6TN/TaskGo). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
+
+## ⌛ Features Futuras
+
+ - <h5>Dados de usuário salvo nos cookies.</h5>
+ - <h5>Possibilidade de Trocar de usuário.</h5>
+ - <h5>Ordenação de Tarefas do usuário.</h5>
+ - <h5>Ordenação de Tarefas do Grupo.</h5>
+ - <h5>Implementação de API Real.</h5>
+
+---
+
+## ⚒️ Executando o Projeto
+
+Execute um dos dois comandos abaixo a depender do seu gerenciador de pacotes.
 
 ```bash
+npm install
 npm run dev
 # or
+yarn install
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O Site será hospedado no domínio [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Feito com ♥ by [Luan Lima](https://github.com/limaluan).
