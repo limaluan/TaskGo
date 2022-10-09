@@ -35,10 +35,10 @@ export async function getGroupById(groupId: string) {
   return groups;
 }
 
-export async function getUsers() {
-  const users = (await getEntities()).filter(
-    (entity) => entity.type !== "group"
-  );
+export async function getUsers(): Promise<IEntity[]> {
+  const { data } = await api.get("/users");
+
+  const users = data.entities;
 
   return users;
 }
@@ -61,7 +61,13 @@ export async function getUsersByGroup(groupId: string) {
 
 // Retorna todas entidades ( Direto pelo cache )
 export function useEntities() {
-  return useQuery("users", getEntities, {
+  return useQuery("entities", getEntities, {
+    staleTime: 1000 * 5 /* 5 Segundos */,
+  });
+}
+
+export function useUsers() {
+  return useQuery("users", getUsers, {
     staleTime: 1000 * 5 /* 5 Segundos */,
   });
 }

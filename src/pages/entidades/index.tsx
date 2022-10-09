@@ -7,6 +7,7 @@ import { IEntity } from "../../services/mirage";
 import { ConfirmationModal } from "../../components/Modals/EntityModals/ConfirmationModal";
 import { CreateEntityModal } from "../../components/Modals/EntityModals/CreateEntityModal";
 import { EditEntityModal } from "../../components/Modals/EntityModals/EditEntityModal";
+import { api } from "../../services/api";
 
 export default function Entidades() {
   const { data, isLoading, error } = useEntities(); // Pega os dados da entidade do Cache
@@ -105,6 +106,7 @@ export default function Entidades() {
 
   useEffect(() => {
     orderByAlphabet(true); // Inicia a lista de entidades por ordem alfabética
+    api.get("/users");
   }, [data]);
 
   return (
@@ -180,7 +182,8 @@ export default function Entidades() {
             )}
             {/* Lista as Entidades */}
             {entities
-              .filter((entity) => { // Filtra de acordo com a busca do usuário
+              .filter((entity) => {
+                // Filtra de acordo com a busca do usuário
                 return search.toLowerCase() === ""
                   ? entity
                   : entity.name.toLowerCase().includes(search.toLowerCase());

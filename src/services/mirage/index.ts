@@ -196,6 +196,12 @@ export function makeServer() {
       });
 
       // ROTAS DO USUÁRIO
+      this.get("/users", (schema, request): any => {
+        const users = schema.all("entity");
+
+        return users.filter((entity) => entity.type === "user");
+      });
+
       this.get("/user/:id", (schema, request): any => {
         const id = request.params.id;
 

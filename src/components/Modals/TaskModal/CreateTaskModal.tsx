@@ -5,9 +5,11 @@ import {
   getGroups,
   getUsers,
   useEntities,
+  useUsers,
 } from "../../../services/hooks/useEntities";
 import { useTasks } from "../../../services/hooks/useTasks";
 import { IEntity } from "../../../services/mirage";
+import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
 import { ModalContainer } from "../EntityModals/styles";
 
 interface ICreateTaskModalProps {
@@ -20,10 +22,15 @@ export function CreateTaskModal({
   onRequestClose,
 }: ICreateTaskModalProps) {
   const { data: entities } = useEntities();
+  const {
+    data: users,
+    refetch: refetchUsers,
+    isLoading: isUsersLoading,
+    error: usersError,
+  } = useUsers();
   const { refetch: refetchTasks } = useTasks();
 
   let [groups, setGroups] = useState<IEntity[]>([]);
-  let [users, setUsers] = useState<IEntity[]>([]);
 
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -76,7 +83,7 @@ export function CreateTaskModal({
 
   useEffect(() => {
     getGroups().then((groupsData) => setGroups(groupsData));
-    getUsers().then((entitiesData) => setUsers(entitiesData));
+    refetchUsers();
   }, [entities]);
 
   return (
@@ -130,7 +137,11 @@ export function CreateTaskModal({
         <h2>Designe um usuário para tarefa:</h2>
         <section className="select-section">
           <div className="wrapper">
-            {users.length >= 1 ? (
+            {isUsersLoading ? (
+              <LoadingSpinner />
+            ) : usersError ? (
+              <h1>Não foi possível carregar os usuários.</h1>
+            ) : users && users.length >= 1 ? (
               <>
                 {users.map((user) => (
                   <div
