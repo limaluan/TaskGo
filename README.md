@@ -70,6 +70,7 @@ Você pode visualizar o layout base do projeto através [desse link](https://www
  - <h5>Possibilidade de Trocar de usuário.</h5>
  - <h5>Ordenação de Tarefas do usuário.</h5>
  - <h5>Ordenação de Tarefas do Grupo.</h5>
+ - <h5>Implementação do React Redux.</h5>
  - <h5>Implementação de API Real.</h5>
 
 ---

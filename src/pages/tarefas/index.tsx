@@ -56,15 +56,15 @@ export default function Tarefas() {
           </div>
           <div className="task-header">
             <h3>Estado</h3>
-            <i className="material-icons">arrow_downward</i>
+            <i className="material-icons">remove</i>
           </div>
           <div className="task-header">
             <h3>Usuário</h3>
-            <i className="material-icons">arrow_downward</i>
+            <i className="material-icons">remove</i>
           </div>
           <div className="task-header">
             <h3>Grupo</h3>
-            <i className="material-icons">arrow_downward</i>
+            <i className="material-icons">remove</i>
           </div>
         </div>
         <hr />
