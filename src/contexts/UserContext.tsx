@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useLayoutEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useTasks } from "../services/hooks/useTasks";
 import { IEntity, ITask } from "../services/mirage";
@@ -41,7 +41,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     }
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getUsersTasks();
     getTasksByGroup();
   }, [tasksData, user]);

@@ -127,7 +127,7 @@ export function makeServer() {
       this.delete("/entities/:id", (schema, request): any => {
         const id = request.params.id;
 
-        schema.where("entity", (entity) => entity.group === id).destroy();
+        schema.where("entity", (entity) => entity?.group.id === id).destroy();
         schema.where("task", (task) => task.group?.id === id).destroy();
 
         return schema.find("entity", id)?.destroy();
