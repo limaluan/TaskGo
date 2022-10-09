@@ -36,12 +36,6 @@ export async function getTasks(): Promise<ITask[]> {
   return tasks;
 }
 
-export async function getTasksByUser(userId: string) {
-  const tasks = (await getTasks()).filter((task) => task.user?.id === userId);
-
-  return tasks;
-}
-
 export async function getTasksByGroup(groupId: string) {
   const tasks = (await getTasks()).filter((task) => task.group.id === groupId);
 

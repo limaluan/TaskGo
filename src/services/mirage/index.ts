@@ -136,6 +136,16 @@ export function makeServer() {
       // ROTAS DAS TAREFAS
       this.get("/tasks");
 
+      this.get("/tasks/user/:id", (schema, request): any => {
+        const id = request.params.id;
+
+        const userTasks = schema
+          .all("task")
+          .filter((task) => task.user.id === id);
+
+        return userTasks;
+      });
+
       this.post("tasks", (schema, request) => {
         const data = JSON.parse(request.requestBody);
 

@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { api } from "../../../services/api";
-import {
-  getGroups,
-  getUsers,
-  useUsers,
-} from "../../../services/hooks/useEntities";
 import { useTasks } from "../../../services/hooks/useTasks";
-import { IEntity, ITask } from "../../../services/mirage";
-import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
+import { ITask } from "../../../services/mirage";
 import { ModalContainer } from "./styles";
 
 interface ICreateTaskModalProps {

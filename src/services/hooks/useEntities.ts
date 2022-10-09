@@ -66,6 +66,7 @@ export function useEntities() {
   });
 }
 
+// Retorna todos usuários ( Direto pelo cache )
 export function useUsers() {
   return useQuery("users", getUsers, {
     staleTime: 1000 * 5 /* 5 Segundos */,

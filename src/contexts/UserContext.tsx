@@ -1,11 +1,6 @@
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useLayoutEffect, useState } from "react";
 import { api } from "../services/api";
-import { getTasksByUser, useTasks } from "../services/hooks/useTasks";
+import { useTasks } from "../services/hooks/useTasks";
 import { IEntity, ITask } from "../services/mirage";
 
 interface IAuthContextData {
@@ -26,11 +21,17 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
 
   const [userTasks, setUsersTasks] = useState<ITask[]>([]);
 
-  useEffect(() => {
-    getTasksByUser(user.id).then((response) => {
-      setUsersTasks(response);
-    });
-  }, [tasksData]);
+  function getUsersTasks() {
+    const tasks = tasksData?.filter((task) => task.user?.id === user.id);
+
+    if (tasks) {
+      return setUsersTasks(tasks);
+    }
+  }
+
+  useLayoutEffect(() => {
+    getUsersTasks();
+  }, [tasksData, user]);
 
   async function signIn(userId: string): Promise<any> {
     try {
@@ -39,7 +40,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     } catch (e: any) {
       throw Error(e);
     }
-    
+
     return user;
   }
 
