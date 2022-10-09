@@ -10,9 +10,11 @@ import { TarefasContainer } from "./styles";
 export default function Tarefas() {
   const { data: tasks, isLoading, error } = useTasks();
 
+  // Estados de Controle de Modal
   const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
   const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
 
+  // Tarefa Selecionada para o Modal
   const [taskSelected, setTaskSelected] = useState<ITask>();
 
   function handleEditTask(task: ITask) {
@@ -71,7 +73,9 @@ export default function Tarefas() {
         {isLoading ? (
           <LoadingSpinner />
         ) : error ? (
-          <h1 className="not-found">Não foi possível carregar a lista de Entidades.</h1>
+          <h1 className="not-found">
+            Não foi possível carregar a lista de Entidades.
+          </h1>
         ) : (
           <>
             {tasks!.length >= 1 ? (
@@ -82,7 +86,13 @@ export default function Tarefas() {
                     ? task
                     : task.description
                         .toLowerCase()
-                        .includes(search.toLowerCase());
+                        .includes(search.toLowerCase()) ||
+                        task.user?.name
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        task.group?.name
+                          .toLowerCase()
+                          .includes(search.toLowerCase());
                 })
                 .map((task) => (
                   <div key={task.id} onClick={() => handleEditTask(task)}>
