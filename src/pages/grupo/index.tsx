@@ -31,6 +31,7 @@ export default function Usuario() {
         </div>
         <hr />
 
+        {/* Lista todas as tarefas do Grupo */}
         {groupTasks.length >= 1 ? (
           groupTasks.map((task) => (
             <div key={task.id}>
@@ -54,7 +55,7 @@ export default function Usuario() {
             </div>
           ))
         ) : (
-          <h2>Não foi possível encontrar tarefas do usuário.</h2>
+          <h2>Não foi possível encontrar tarefas do Grupo.</h2>
         )}
       </GrupoContainer>
     </main>

@@ -40,6 +40,7 @@ export function CreateTaskModal({
   const [groupId, setGroupId] = useState("");
   const [minutes, setMinutes] = useState("");
 
+  // Define qual GRUPO foi selecionado
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
@@ -49,6 +50,7 @@ export function CreateTaskModal({
     document.querySelector(`#group-${groupId}`)?.classList.add("selected");
   };
 
+  // Define qual USUÁRIO foi selecionado
   const setUserActive = (userId: string) => {
     document.querySelectorAll(".user-card").forEach((card) => {
       card.classList.remove("selected");
@@ -58,6 +60,7 @@ export function CreateTaskModal({
     document.querySelector(`#user-${userId}`)?.classList.add("selected");
   };
 
+  // Faz o POST da Tarefa após o Submit
   const handleSubmit = async () => {
     const task = {
       description,
@@ -82,9 +85,9 @@ export function CreateTaskModal({
   };
 
   useEffect(() => {
+    // Toda vez que é inicializado obtém a lista de grupos
     getGroups().then((groupsData) => setGroups(groupsData));
-
-    refetchUsers();
+    refetchUsers(); // Atualiza a lista de usuários
   }, [entities]);
 
   return (
@@ -96,6 +99,7 @@ export function CreateTaskModal({
       ariaHideApp={false}
     >
       <ModalContainer>
+        {/* Formulário da Tarefa */}
         <h1>Criar Tarefa</h1>
         <input
           type="text"

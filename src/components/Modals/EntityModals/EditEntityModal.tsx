@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
+import { UserContext } from "../../../contexts/UserContext";
 import { api } from "../../../services/api";
 import { getGroups, useEntities } from "../../../services/hooks/useEntities";
 import { IEntity } from "../../../services/mirage";
@@ -16,17 +17,23 @@ export function EditEntityModal({
   onRequestClose,
   entity,
 }: ICreateEntityModalProps) {
-  const { data ,refetch } = useEntities();
-  
+  const { signIn, user } = useContext(UserContext);
+  const { data, refetch } = useEntities();
+
+  // Estado que contém todos os grupos
   let [groups, setGroups] = useState<IEntity[]>([]);
 
   useEffect(() => {
+    // Toda vez que é inicializado obtém a lista de grupos
     getGroups().then((groupsData) => setGroups(groupsData));
   }, [data]);
 
+  // Formulário da Entidade
   const [newGroupId, setNewGroupId] = useState("");
+  const [newName, setNewName] = useState("");
   const [editErrorMsg, setEditErrorMsg] = useState("");
 
+  // Define qual grupo foi selecionado
   const setGroupActive = (groupId: string) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
@@ -36,10 +43,15 @@ export function EditEntityModal({
     document.querySelector(`#card-${groupId}`)?.classList.add("selected");
   };
 
-  const [newName, setNewName] = useState("");
-
+  // Faz o PUT da entidade após o submit do formulário
   const handleSubmit = async () => {
-    const newEntity = { ...entity, name: newName, group: newGroupId };
+    const newEntity = {
+      ...entity,
+      name: newName,
+      group: {
+        id: newGroupId,
+      },
+    };
 
     try {
       await api.put("/entities", newEntity);
@@ -47,6 +59,7 @@ export function EditEntityModal({
       return setEditErrorMsg(e.response.data.message + "*");
     }
 
+    signIn(user.id);
     setNewName("");
     setNewGroupId("");
     setEditErrorMsg("");
@@ -70,6 +83,7 @@ export function EditEntityModal({
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
         />
+        {/* Se o tipo da entidade for USUÁRIO ele mostra a seção de mover para outro grupo */}
         {entity.type === "user" ? (
           <>
             <h1>Mover para o grupo:</h1>

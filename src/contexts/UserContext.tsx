@@ -41,11 +41,13 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     }
   }
 
+  // Atualiza as tarefas do grupo e do usuário sempre que houver mudanças nas tarefas ou usuário
   useEffect(() => {
     getUsersTasks();
     getTasksByGroup();
   }, [tasksData, user]);
 
+  // Faz a autenticação do usuário
   async function signIn(userId: string): Promise<any> {
     try {
       const user = await api.get(`/user/${userId}`);

@@ -21,6 +21,7 @@ export function UserAuthenticateModal({
 
   const { push: redirectsTo } = useRouter();
 
+  // Realiza a autenticação do usuário após o Submit
   const handleAuthUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -54,6 +55,9 @@ export function UserAuthenticateModal({
             onChange={(e) => setUserId(e.target.value)}
           />
           <p className="error-msg">{errorMsg}</p>
+          <button type="submit" className="green-button" style={{margin: "0.5rem auto",}}>
+            Confirmar
+          </button>
         </form>
       </ModalContainer>
     </Modal>

@@ -19,6 +19,7 @@ export async function getEntities(): Promise<IEntity[]> {
   return entities;
 }
 
+// Retorna todos os GRUPOS
 export async function getGroups() {
   const groups = (await getEntities()).filter(
     (entity) => entity.type === "group"
@@ -27,26 +28,11 @@ export async function getGroups() {
   return groups;
 }
 
-export async function getGroupById(groupId: string) {
-  const groups = (await getEntities()).filter(
-    (entity) => entity.type === "group" && entity.id === groupId
-  );
-
-  return groups;
-}
-
+// Retorna todos os USUÁRIOS
 export async function getUsers(): Promise<IEntity[]> {
   const { data } = await api.get("/users");
 
   const users = data.entities;
-
-  return users;
-}
-
-export async function getUserById(userId: string) {
-  const users = (await getEntities()).filter(
-    (entity) => entity.type !== "group" && entity.id === userId
-  );
 
   return users;
 }

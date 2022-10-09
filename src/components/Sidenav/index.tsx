@@ -10,8 +10,10 @@ export function Sidenav() {
   const { user } = useContext(UserContext);
   const { push: redirectsTo } = useRouter();
 
+  // Estado que vai receber para qual página o usuário será redirecionado
   const [target, setTarget] = useState("");
 
+  // Faz a autenticação do usuário e redireciona para a Página de Usuário
   const handleUserLogin = () => {
     setTarget("usuario");
 
@@ -22,6 +24,7 @@ export function Sidenav() {
     return redirectsTo(`/usuario`);
   };
 
+  // Faz a autenticação do usuário e redireciona para a Página do Grupo
   const handleGroupLogin = () => {
     setTarget("grupo");
 
@@ -52,10 +55,12 @@ export function Sidenav() {
 
         {/* Sessão de Usuário */}
         <h3 className="subtitle">USUÁRIO</h3>
+        {/* Link para a Página de Usuário */}
         <a href="#" className="nav" onClick={handleUserLogin}>
           <i className="material-icons">account_circle</i>
           <h3>Usuário</h3>
         </a>
+        {/* Link para a Página do Grupo */}
         <a href="#" className="nav" onClick={handleGroupLogin}>
           <i className="material-icons">group</i>
           <h3>Grupo</h3>

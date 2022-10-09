@@ -10,10 +10,13 @@ export default function Usuario() {
   const { user, userTasks } = useContext(UserContext);
 
   const [isUserTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
+  // Recebe a tarefa Selecionada pelo usuário
   const [taskSelected, setTaskSelected] = useState<ITask>({} as ITask);
 
   const { refetch: refetchTasks } = useTasks();
 
+  // Abre o menu de Tarefa com a tarefa selecionada ( taskSelected )
   const handleOpenTask = (task: ITask) => {
     setTaskSelected(task);
     return setIsTaskModalOpen(true);
@@ -44,6 +47,7 @@ export default function Usuario() {
         </div>
         <hr />
 
+        {/* Lista as tarefas do usuário */}
         {userTasks.length >= 1 ? (
           userTasks.map((task) => (
             <div key={task.id} onClick={() => handleOpenTask(task)}>

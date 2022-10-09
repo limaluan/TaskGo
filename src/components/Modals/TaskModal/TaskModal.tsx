@@ -22,12 +22,14 @@ export function EditTaskModal({
 
   const { refetch: refetchTasks } = useTasks();
 
+  // Ativa e desativa as op;cões de editar
   const toggleEditMode = () => {
     document.querySelectorAll(".edit-mode").forEach((element) => {
       element.classList.toggle("off");
     });
   };
 
+  // Apaga todos os dados do formulário
   function eraseData() {
     setErrorMsg("");
     setNewTaskDescription("");
@@ -35,6 +37,7 @@ export function EditTaskModal({
     return onRequestClose();
   }
 
+  // Realiza o PUT da tarefa depois do Submit
   const handleEditTask = async () => {
     try {
       await api.put("/tasks", {
@@ -48,6 +51,7 @@ export function EditTaskModal({
     return eraseData();
   };
 
+  // Realiza o PUT da tarefa depois do Submit, deixando-a como APROVADA
   const handleApprove = async () => {
     try {
       await api.put("/tasks", {
@@ -61,6 +65,7 @@ export function EditTaskModal({
     return eraseData();
   };
 
+  // Realiza o PUT da tarefa depois do Submit, deixando-a como REPROVADA
   const handleReject = async () => {
     try {
       await api.put("/tasks", {
@@ -74,6 +79,7 @@ export function EditTaskModal({
     return eraseData();
   };
 
+  // Realiza o DELETE da tarefa depois do Submit
   const handleDeleteTask = async () => {
     try {
       await api.delete(`/tasks/${task?.id}`);
@@ -85,6 +91,7 @@ export function EditTaskModal({
   };
 
   useEffect(() => {
+    // Inicializa os campos do modal com as propriedades da tarefa selecionada
     setNewTaskDescription(task?.description || "");
     setErrorMsg("");
   }, [task]);
@@ -98,6 +105,7 @@ export function EditTaskModal({
       ariaHideApp={false}
     >
       <ModalContainer>
+        {/* Form do Modal */}
         <h1>
           Tarefa <span>{task?.state}</span>
         </h1>
@@ -116,6 +124,7 @@ export function EditTaskModal({
 
         <p className="error-msg edit-mode off">{errorMsg}</p>
 
+        {/* Se o Estado da tarefa for pronto, mostra as opções de APROVAR ou REJEITAR */}
         {task?.state === "pronta" ? (
           <>
             <div className="approve-section">

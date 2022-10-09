@@ -16,9 +16,11 @@ export function CreateEntityModal({
 }: ICreateEntityModalProps) {
   const { data, refetch } = useEntities();
 
+  // Estado que contém todos os grupos
   let [groups, setGroups] = useState<IEntity[]>([]);
 
   useEffect(() => {
+    // Toda vez que é inicializado obtém a lista de grupos
     getGroups().then((groupsData) => setGroups(groupsData));
   }, [data]);
 
@@ -58,6 +60,7 @@ export function CreateEntityModal({
       return setCreateErrorMsg(e.response.data.message + "*");
     }
 
+    // Reseta os campos
     setName("");
     setType("user");
     setId("");
@@ -86,6 +89,7 @@ export function CreateEntityModal({
     >
       <ModalContainer>
         <h1>Criar {type === "group" ? "Grupo" : "Usuário"}</h1>
+
         <form>
           <div className="type">
             <label htmlFor="type">Tipo de entidade: </label>
@@ -115,6 +119,8 @@ export function CreateEntityModal({
             onChange={(e) => setId(e.target.value)}
           />
         </form>
+
+        {/* Seção para Selecionar o Grupo caso a entidade seja um usuário */}
         <h1 id="group-section-title">Selecione um grupo*</h1>
         <section className="select-section">
           <div className="wrapper">
@@ -139,7 +145,7 @@ export function CreateEntityModal({
             )}
           </div>
         </section>
-        <p className="error-msg">{createErrorMsg}</p>
+        <p className="error-msg">{createErrorMsg}</p> {/* Mensagem de erro */}
         <button type="submit" className="create-button" onClick={handleSubmit}>
           <i className="material-icons">add</i>
           Criar

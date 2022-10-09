@@ -117,7 +117,13 @@ export function makeServer() {
           throw Error("A Entidade deve conter um nome.");
         }
 
-        return schema.findBy("entity", { id: data.id })?.update(data);
+        return schema.findBy("entity", { id: data.id })?.update({
+          ...data,
+          group: {
+            id: data.group.id,
+            name: schema.findBy("entity", { id: data.group.id })?.name,
+          },
+        });
       });
 
       this.delete("/entities/:id", (schema, request): any => {

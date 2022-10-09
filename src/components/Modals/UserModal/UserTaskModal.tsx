@@ -17,6 +17,7 @@ export function UserTaskModal({
 }: ICreateEntityModalProps) {
   const { refetch: refetchTasks } = useTasks();
   
+  // Define o estado da tarefa para FAZENDO
   const handleDoingTask = async () => {
     try {
       await api.put("/tasks", {
@@ -29,7 +30,7 @@ export function UserTaskModal({
     return onRequestClose();
   };
 
-
+  // Define o estado da tarefa para PRONTO
   const handleDoneTask = async () => {
     try {
       await api.put("/tasks", {
