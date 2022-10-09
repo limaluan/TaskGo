@@ -139,36 +139,43 @@ export function CreateTaskModal({
         </section>
 
         {/* Seção para selecionar usuário */}
-        <h2>Designe um usuário para tarefa:</h2>
-        <section className="select-section">
-          <div className="wrapper">
-            {isUsersLoading ? (
-              <LoadingSpinner />
-            ) : usersError ? (
-              <h1>Não foi possível carregar os usuários.</h1>
-            ) : users && users.length >= 1 ? (
-              <>
-                {users
-                  .filter((user) => user.group.id === groupId)
-                  .map((user) => (
-                    <div
-                      className="user-card"
-                      key={user.id}
-                      id={`user-${user.id}`}
-                      onClick={() => setUserActive(user.id)}
-                    >
-                      <i className="material-icons">account_circle</i>
-                      <span>{user.name}</span>
-                    </div>
-                  ))}
-              </>
-            ) : (
-              <h1 style={{ padding: "1rem 0" }}>
-                Não há usuários cadastrados.
-              </h1>
-            )}
-          </div>
-        </section>
+        {groupId !== "" && (
+          <>
+            <h2>
+              Designe um usuário para tarefa: <br /> Opcional
+            </h2>
+            <section className="select-section">
+              <div className="wrapper">
+                {isUsersLoading ? (
+                  <LoadingSpinner />
+                ) : usersError ? (
+                  <h1>Não foi possível carregar os usuários.</h1>
+                ) : users && users.length >= 1 ? (
+                  <>
+                    {users
+                      .filter((user) => user.group.id === groupId)
+                      .map((user) => (
+                        <div
+                          className="user-card"
+                          key={user.id}
+                          id={`user-${user.id}`}
+                          onClick={() => setUserActive(user.id)}
+                        >
+                          <i className="material-icons">account_circle</i>
+                          <span>{user.name}</span>
+                        </div>
+                      ))}
+                  </>
+                ) : (
+                  <h1 style={{ padding: "1rem 0" }}>
+                    Não há usuários cadastrados.
+                  </h1>
+                )}
+              </div>
+            </section>
+          </>
+        )}
+
         <p className="error-msg">{errorMsg}</p>
         <button className="create-button" onClick={handleSubmit}>
           <i className="material-icons">add</i>

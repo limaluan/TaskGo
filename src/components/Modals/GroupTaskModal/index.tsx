@@ -48,7 +48,7 @@ export function GroupTaskModal({
         <p className="task-description">{task?.description}</p>
 
         {!task.user?.id && (
-          <button onClick={handleAssociateTask} className="create-button">
+          <button onClick={handleAssociateTask} className="approve-button">
             Associar
           </button>
         )}

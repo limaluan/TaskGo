@@ -90,6 +90,12 @@ export const GlobalStyles = createGlobalStyle`
       transform: translateX(0%);
     }
 
+    .not-found {
+      width: 100%;
+      text-align: center;
+      padding: 2rem;
+    }
+    
     .green-button {
       background-color: var(--green);
       width: 12rem;

@@ -65,7 +65,9 @@ export default function Usuario() {
             </div>
           ))
         ) : (
-          <h2>Não foi possível encontrar tarefas do Grupo.</h2>
+          <h1 className="not-found">
+            Não foi possível encontrar tarefas do Grupo.
+          </h1>
         )}
 
         <GroupTaskModal

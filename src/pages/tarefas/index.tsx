@@ -71,7 +71,7 @@ export default function Tarefas() {
         {isLoading ? (
           <LoadingSpinner />
         ) : error ? (
-          <h1>Não foi possível carregar a lista de Entidades.</h1>
+          <h1 className="not-found">Não foi possível carregar a lista de Entidades.</h1>
         ) : (
           <>
             {tasks!.length >= 1 ? (
@@ -109,7 +109,7 @@ export default function Tarefas() {
                   </div>
                 ))
             ) : (
-              <h1>Não foi possível encontrar tarefas.</h1>
+              <h1 className="not-found">Não foi possível encontrar tarefas.</h1>
             )}
           </>
         )}

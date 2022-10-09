@@ -71,7 +71,7 @@ export function makeServer() {
     },
 
     seeds(server) {
-      server.createList("entity", 10);
+      // server.createList("entity", 10);
       // server.createList("task", 5);
     },
 

@@ -171,11 +171,7 @@ export default function Entidades() {
               <></>
             ) : (
               <h1
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  padding: "2rem",
-                }}
+                className="not-found"
               >
                 Nenhuma Entidade Encontrada.
               </h1>

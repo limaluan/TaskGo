@@ -68,7 +68,7 @@ export default function Usuario() {
             </div>
           ))
         ) : (
-          <h2>Não foi possível encontrar tarefas do usuário.</h2>
+          <h1 className="not-found">Não foi possível encontrar tarefas do usuário.</h1>
         )}
         <UserTaskModal
           isOpen={isUserTaskModalOpen}
