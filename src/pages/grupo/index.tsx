@@ -1,18 +1,10 @@
 import Head from "next/head";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { getTasksByGroup } from "../../services/hooks/useTasks";
-import { ITask } from "../../services/mirage";
 import { GrupoContainer } from "./styles";
 
 export default function Usuario() {
-  const { user } = useContext(UserContext);
-
-  const [groupTasks, setGroupTasks] = useState<ITask[]>([]);
-
-  useEffect(() => {
-    getTasksByGroup(user.group?.id).then((tasks) => setGroupTasks(tasks));
-  }, []);
+  const { user, groupTasks } = useContext(UserContext);
 
   return (
     <main className="expanded">

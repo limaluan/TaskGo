@@ -7,6 +7,7 @@ interface IAuthContextData {
   signIn(userId: string): Promise<any>;
   user: IEntity;
   userTasks: ITask[];
+  groupTasks: ITask[];
 }
 
 interface IUserAuthProps {
@@ -20,17 +21,29 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
   const { data: tasksData } = useTasks();
 
   const [userTasks, setUsersTasks] = useState<ITask[]>([]);
+  const [groupTasks, setGroupTasks] = useState<ITask[]>([]);
 
   function getUsersTasks() {
-    const tasks = tasksData?.filter((task) => task.user?.id === user.id);
+    const userTasks = tasksData?.filter((task) => task.user?.id === user.id);
 
-    if (tasks) {
-      return setUsersTasks(tasks);
+    if (userTasks) {
+      return setUsersTasks(userTasks);
+    }
+  }
+
+  function getTasksByGroup() {
+    const groupTasks = tasksData?.filter(
+      (task) => task.group?.id === user.group?.id
+    );
+
+    if (groupTasks) {
+      return setGroupTasks(groupTasks);
     }
   }
 
   useLayoutEffect(() => {
     getUsersTasks();
+    getTasksByGroup();
   }, [tasksData, user]);
 
   async function signIn(userId: string): Promise<any> {
@@ -45,7 +58,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
   }
 
   return (
-    <UserContext.Provider value={{ user, signIn, userTasks }}>
+    <UserContext.Provider value={{ user, signIn, userTasks, groupTasks }}>
       {children}
     </UserContext.Provider>
   );
