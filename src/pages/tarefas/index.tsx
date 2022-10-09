@@ -92,7 +92,7 @@ export default function Tarefas() {
                       </div>
                       <div className={`task-state ${task.state}`}>
                         <h3>{task.state.toUpperCase()}</h3>
-                        {task.state === "fazer" ? (
+                        {task.state === "fazer" || task.state === "fazendo" ? (
                           <p>[ {task.reimaing_time} Min ]</p>
                         ) : (
                           <></>

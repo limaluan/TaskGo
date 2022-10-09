@@ -7,11 +7,13 @@ import { ModalContainer } from "../TaskModal/styles";
 interface ICreateEntityModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  redirectsTarget: string;
 }
 
 export function UserAuthenticateModal({
   isOpen,
   onRequestClose,
+  redirectsTarget,
 }: ICreateEntityModalProps) {
   const [errorMsg, setErrorMsg] = useState("");
   const [userId, setUserId] = useState("");
@@ -22,13 +24,13 @@ export function UserAuthenticateModal({
   const handleAuthUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = await signIn(userId);
-
-    if (user === "ID incorreto.") {
+    try {
+      await signIn(userId);
+    } catch (e: any) {
       return setErrorMsg("ID Inválido");
     }
 
-    redirectsTo("/usuario");
+    redirectsTo(`/${redirectsTarget}`);
     setErrorMsg("");
     setUserId("");
     return onRequestClose();

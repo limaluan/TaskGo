@@ -46,7 +46,10 @@ export function CreateEntityModal({
       name,
       type,
       id: type === "group" ? Math.ceil(Math.random() * 1000).toString() : id,
-      group: type === "group" ? undefined : groupId,
+      group: {
+        id: groupId,
+        name: "",
+      },
     };
 
     try {

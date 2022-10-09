@@ -37,7 +37,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
       const user = await api.get(`/user/${userId}`);
       setUser(user.data.entity);
     } catch (e: any) {
-      return e.response.data.message;
+      throw Error(e);
     }
     
     return user;

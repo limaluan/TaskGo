@@ -51,6 +51,14 @@ export async function getUserById(userId: string) {
   return users;
 }
 
+export async function getUsersByGroup(groupId: string) {
+  const groups = (await getEntities()).filter(
+    (entity) => entity.type !== "group" && entity.id === groupId
+  );
+
+  return groups;
+}
+
 // Retorna todas entidades ( Direto pelo cache )
 export function useEntities() {
   return useQuery("users", getEntities, {

@@ -1,26 +1,17 @@
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
-import { UserTaskModal } from "../../components/Modals/UserModal/UserTaskModal";
 import { UserContext } from "../../contexts/UserContext";
-import { useTasks } from "../../services/hooks/useTasks";
+import { getTasksByGroup } from "../../services/hooks/useTasks";
 import { ITask } from "../../services/mirage";
-import { UsuarioContainer } from "./styles";
+import { GrupoContainer } from "./styles";
 
 export default function Usuario() {
-  const { user, userTasks } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  const [isUserTaskModalOpen, setIsTaskModalOpen] = useState(false);
-  const [taskSelected, setTaskSelected] = useState<ITask>({} as ITask);
-
-  const { refetch: refetchTasks } = useTasks();
-
-  const handleOpenTask = (task: ITask) => {
-    setTaskSelected(task);
-    return setIsTaskModalOpen(true);
-  };
+  const [groupTasks, setGroupTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
-    refetchTasks();
+    getTasksByGroup(user.group?.id).then((tasks) => setGroupTasks(tasks));
   }, []);
 
   return (
@@ -28,8 +19,8 @@ export default function Usuario() {
       <Head>
         <title>Usuário | TaskGo</title>
       </Head>
-      <UsuarioContainer>
-        <h1 className="page-title">Tarefas de {user.name}</h1>
+      <GrupoContainer>
+        <h1 className="page-title">Tarefas do Grupo {user.group.name}</h1>
 
         {/* Cabeçalho */}
         <div className="entity">
@@ -41,12 +32,16 @@ export default function Usuario() {
             <h3>Estado</h3>
             <i className="material-icons">remove</i>
           </div>
+          <div className="entity-name entity-header">
+            <h3>Usuário</h3>
+            <i className="material-icons">arrow_downward</i>
+          </div>
         </div>
         <hr />
 
-        {userTasks.length >= 1 ? (
-          userTasks.map((task) => (
-            <div key={task.id} onClick={() => handleOpenTask(task)}>
+        {groupTasks.length >= 1 ? (
+          groupTasks.map((task) => (
+            <div key={task.id}>
               <div className="task">
                 <div className="task-description">
                   <h3>{task.description}</h3>
@@ -59,6 +54,9 @@ export default function Usuario() {
                     <></>
                   )}
                 </div>
+                <div className="task-user">
+                  <h3>{task.user?.name ? task.user?.name : "---"}</h3>
+                </div>
               </div>
               <hr />
             </div>
@@ -66,12 +64,7 @@ export default function Usuario() {
         ) : (
           <h2>Não foi possível encontrar tarefas do usuário.</h2>
         )}
-        <UserTaskModal
-          isOpen={isUserTaskModalOpen}
-          onRequestClose={() => setIsTaskModalOpen(false)}
-          task={taskSelected}
-        />
-      </UsuarioContainer>
+      </GrupoContainer>
     </main>
   );
 }

@@ -42,6 +42,12 @@ export async function getTasksByUser(userId: string) {
   return tasks;
 }
 
+export async function getTasksByGroup(groupId: string) {
+  const tasks = (await getTasks()).filter((task) => task.group.id === groupId);
+
+  return tasks;
+}
+
 // Retorna todas tarefas ( Direto pelo cache )
 export function useTasks() {
   return useQuery("tasks", getTasks, {

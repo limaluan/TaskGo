@@ -5,7 +5,10 @@ export interface IEntity {
   name: string;
   type: string;
   created_at: string;
-  group: string;
+  group: {
+    id: string;
+    name: string;
+  };
   tasks: string[];
 }
 
@@ -95,6 +98,13 @@ export function makeServer() {
 
         return schema.create("entity", {
           ...data,
+          group:
+            data.type === "group"
+              ? undefined
+              : {
+                  id: data.group.id,
+                  name: schema.findBy("entity", { id: data.group.id })?.name,
+                },
           created_at: "100",
           tasks: [],
         });

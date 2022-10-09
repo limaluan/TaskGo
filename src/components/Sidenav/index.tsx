@@ -10,12 +10,26 @@ export function Sidenav() {
   const { user } = useContext(UserContext);
   const { push: redirectsTo } = useRouter();
 
+  const [target, setTarget] = useState("");
+
   const handleUserLogin = () => {
+    setTarget("usuario");
+
     if (!user.id) {
       return setIsUserAuthModalOpen(true);
     }
 
     return redirectsTo(`/usuario`);
+  };
+
+  const handleGroupLogin = () => {
+    setTarget("grupo");
+
+    if (!user.id) {
+      return setIsUserAuthModalOpen(true);
+    }
+
+    return redirectsTo(`/grupo`);
   };
 
   return (
@@ -42,7 +56,7 @@ export function Sidenav() {
           <i className="material-icons">account_circle</i>
           <h3>Usuário</h3>
         </a>
-        <a href="#" className="nav">
+        <a href="#" className="nav" onClick={handleGroupLogin}>
           <i className="material-icons">group</i>
           <h3>Grupo</h3>
         </a>
@@ -51,6 +65,7 @@ export function Sidenav() {
       <UserAuthenticateModal
         isOpen={isUserAuthModalOpen}
         onRequestClose={() => setIsUserAuthModalOpen(false)}
+        redirectsTarget={target}
       />
     </nav>
   );
