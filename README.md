@@ -16,7 +16,7 @@
 
 <h2><img height="36px" src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png"/> NextJs</h2>
 
-<p>O <b>NextJs</b> é um framework para o <b>ReactJs</b> que oferece a possibildiade de criar uma API juntamente com o Front-End, além de trazer alguns beneficíos em questão de perfomance e obtenção de dados Server-Side.</p>
+<p>O <b>NextJs</b> é um framework para o <b>ReactJs</b> que oferece a possibilidade de criar uma API juntamente com o Front-End, além de trazer alguns beneficíos em questão de perfomance e obtenção de dados Server-Side.</p>
 <p>O <b>NextJs</b> foi utilizado visando a implementação futura de uma API real.</p>
 
 ---
