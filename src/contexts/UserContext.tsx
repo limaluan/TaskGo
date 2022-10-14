@@ -52,9 +52,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     try {
       const user = await api.get(`/user/${userId}`);
       setUser(user.data.entity);
-    } catch (e: any) {
-      throw Error(e);
-    }
+    } catch (e: any) {}
 
     return user;
   }

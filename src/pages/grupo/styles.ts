@@ -65,9 +65,10 @@ export const GrupoContainer = styled.div`
     gap: 1rem;
   }
 
-  .task-user {
+  .task-description {
+    text-overflow: ellipsis;
   }
-
+  
   @media (max-width: 520px) {
     padding: 1rem;
   }
