@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import { api } from "../../../services/api";
 import {
   getGroups,
-  getUsers,
   useEntities,
   useUsers,
 } from "../../../services/hooks/useEntities";

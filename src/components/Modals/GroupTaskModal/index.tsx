@@ -48,7 +48,7 @@ export function GroupTaskModal({
         <p className="task-description">{task?.description}</p>
 
         {/* Se a tarefa não tiver usuário associado e o estado for "fazer" */}
-        {!task.user?.id && task.state !== "fazer" && (
+        {!task.user?.id && task.state === "fazer" && (
           <button onClick={handleAssociateTask} className="approve-button">
             Associar
           </button>
