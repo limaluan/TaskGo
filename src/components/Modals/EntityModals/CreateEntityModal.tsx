@@ -55,7 +55,7 @@ export function CreateEntityModal({
     };
 
     try {
-      await api.post("/entities", entity);
+      await api.post("/entity", entity);
     } catch (e: any) {
       return setCreateErrorMsg(e.response.data.message + "*");
     }
