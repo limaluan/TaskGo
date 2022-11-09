@@ -66,12 +66,12 @@ Você pode visualizar o layout base do projeto através [desse link](https://www
 
 ## ⌛ Features Futuras
 
- - <h5>Implementação de API Real.</h5> ( Em Progresso... )
- - <h5>Dados de usuário salvo nos cookies.</h5>
- - <h5>Possibilidade de Trocar de usuário.</h5>
- - <h5>Ordenação de Tarefas do usuário.</h5>
- - <h5>Ordenação de Tarefas do Grupo.</h5>
- - <h5>Implementação do React Redux.</h5>
+- <h5>Implementação de API Real. ( Em Progresso... ) </h5>
+- <h5>Dados de usuário salvo nos cookies.</h5>
+- <h5>Possibilidade de Trocar de usuário.</h5>
+- <h5>Ordenação de Tarefas do usuário.</h5>
+- <h5>Ordenação de Tarefas do Grupo.</h5>
+- <h5>Implementação do React Redux.</h5>
 
 ---
 

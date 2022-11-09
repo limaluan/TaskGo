@@ -54,10 +54,18 @@ export function CreateEntityModal({
       },
     };
 
-    try {
-      await api.post("/entity", entity);
-    } catch (e: any) {
-      return setCreateErrorMsg(e.response.data.message + "*");
+    // Realiza o POST da entidade para a API
+    const response = await fetch('http://localhost:3000/api/entity', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(entity)
+    }).then(response => response.json())
+
+    if (response.error) {
+      return setCreateErrorMsg(response.error);
     }
 
     // Reseta os campos
