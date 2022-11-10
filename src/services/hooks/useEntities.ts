@@ -3,12 +3,15 @@ import { api } from "../api";
 import { IEntity } from "../mirage";
 
 export async function getEntities(): Promise<IEntity[]> {
-  const { data } = await api.get("/entities");
+  const data = await fetch("http://localhost:3000/api/entity").then(
+    (response) => response.json()
+  );
+  const allEntities = data.data.map((entity: any) => entity.data);
 
-  const entities = data.entities.map((entity: any) => {
+  const entities = allEntities.map((entity: any) => {
     return {
       ...entity,
-      createdAt: new Date(entity.created_at).toLocaleDateString("pt-BR", {
+      created_at: new Date(entity.created_at).toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long",
         year: "numeric",
