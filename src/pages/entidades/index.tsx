@@ -4,7 +4,7 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEntities } from "../../services/hooks/useEntities";
 import { useEffect, useState } from "react";
 import { IEntity } from "../../services/mirage";
-import { ConfirmationModal } from "../../components/Modals/EntityModals/ConfirmationModal";
+import { ConfirmationModal } from "../../components/Modals/EntityModals/DeleteEntityModal";
 import { CreateEntityModal } from "../../components/Modals/EntityModals/CreateEntityModal";
 import { EditEntityModal } from "../../components/Modals/EntityModals/EditEntityModal";
 import { api } from "../../services/api";

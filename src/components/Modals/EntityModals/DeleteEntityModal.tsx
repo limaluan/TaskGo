@@ -19,12 +19,15 @@ export function ConfirmationModal({
   const { refetch: refetchEntities } = useEntities();
   const { refetch: refetchTasks } = useTasks();
 
-  const handleDeleteEntity = () => {
-    try {
-      api.delete(`/entities/${entity.id}`);
-    } catch (e) {
-      console.log(e);
-    }
+  const handleDeleteEntity = async () => {
+    const response = await fetch(`http://localhost:3000/api/entity`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(entity)
+    }).then(response => response.json())
 
     refetchTasks();
     refetchEntities();

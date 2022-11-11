@@ -72,4 +72,20 @@ export default async function entity(
 
     return res.status(202).json({ message: "Entidade Criada com Êxito." });
   }
+
+  // Método DELETE que deleta uma entidade
+  if (req.method === "DELETE") {
+    const entity = req.body;
+
+    await fauna
+      .query(q.Get(q.Match(q.Index("entity_by_id"), q.Casefold(entity.id))))
+      .then(
+        async (entity: any) => await fauna.query(q.Delete(q.Ref(entity.ref)))
+      )
+      .catch((error) => {
+        return res.status(400).json({ error });
+      });
+
+    return res.status(202).json({ message: "Entidade deletada com Êxito." });
+  }
 }
