@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Modal from "react-modal";
 import { UserContext } from "../../../contexts/UserContext";
-import { api } from "../../../services/api";
 import { getGroups, useEntities } from "../../../services/hooks/useEntities";
 import { IEntity } from "../../../services/mirage";
 import { ModalContainer } from "./styles";
@@ -53,10 +52,18 @@ export function EditEntityModal({
       },
     };
 
-    try {
-      await api.put("/entities", newEntity);
-    } catch (e: any) {
-      return setEditErrorMsg(e.response.data.message + "*");
+    // Realiza o POST da entidade para a API
+    const response = await fetch('http://localhost:3000/api/entity', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newEntity)
+    }).then(response => response.json())
+
+    if (response.error) {
+      return setEditErrorMsg(response.error);
     }
 
     signIn(user.id);

@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { api } from "../../../services/api";
 import { useEntities, getGroups } from "../../../services/hooks/useEntities";
 import { IEntity } from "../../../services/mirage";
 import { ModalContainer } from "./styles";

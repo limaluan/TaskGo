@@ -11,11 +11,6 @@ export async function getEntities(): Promise<IEntity[]> {
   const entities = allEntities.map((entity: any) => {
     return {
       ...entity,
-      created_at: new Date(entity.created_at).toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }),
     };
   });
 

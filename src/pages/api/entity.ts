@@ -88,4 +88,42 @@ export default async function entity(
 
     return res.status(202).json({ message: "Entidade deletada com Êxito." });
   }
+
+  // Método Put que altera a entidade
+  if (req.method === "PUT") {
+    const data = req.body;
+    const entity: IEntity = { ...data } as IEntity;
+    let entityInDb: IEntityInDb = {} as IEntityInDb;
+
+    await fauna
+      .query(q.Get(q.Match(q.Index("entity_by_id"), q.Casefold(entity.id))))
+      .then((entity) => (entityInDb = entity as IEntityInDb))
+      .catch(() => {
+        return;
+      });
+
+    // Verifica se a entidade possui nome
+    if (entity.name === "") {
+      return res.status(400).json({ error: "A Entidade deve conter um nome." });
+    }
+
+    // Verifica, caso a entidade for um usuário, se está asssociado a algum grupo
+    if (entity.type === "user" && !entity.group.id) {
+      return res
+        .status(400)
+        .json({ error: "Deve associar Usuário com um Grupo." });
+    }
+
+    // Deleta a entidade salva no banco de dados
+    await fauna.query(q.Delete(q.Ref(entityInDb.ref)));
+
+    // Cria a entidade no banco de dados
+    await fauna.query(
+      q.Create(q.Collection("entities"), {
+        data: { ...data },
+      })
+    );
+
+    return res.status(202).json({ message: "Entidade Criada com Êxito." });
+  }
 }

@@ -1,5 +1,4 @@
 import Modal from "react-modal";
-import { api } from "../../../services/api";
 import { useEntities } from "../../../services/hooks/useEntities";
 import { useTasks } from "../../../services/hooks/useTasks";
 import { IEntity } from "../../../services/mirage";
