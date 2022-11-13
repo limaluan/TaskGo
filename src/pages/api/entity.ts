@@ -77,6 +77,26 @@ export default async function entity(
   if (req.method === "DELETE") {
     const entity = req.body;
 
+    if (entity.type === "group") {
+      // Deleta todos usuários que estejam associado ao grupo caso a entidade seja de Grupo.
+      const entities: any = await fauna.query(
+        q.Map(
+          q.Paginate(q.Documents(q.Collection("entities"))),
+          q.Lambda(
+            (entityInDb) => q.Get(entityInDb)
+          )
+        )
+      );
+
+      try {
+        entities.data.forEach(async (entityToDelete: IEntityInDb) => {
+          entityToDelete.data.group.id == entity.id
+            ? await fauna.query(q.Delete(q.Ref(entityToDelete.ref)))
+            : "";
+        });
+      } catch {}
+    }
+
     await fauna
       .query(q.Get(q.Match(q.Index("entity_by_id"), q.Casefold(entity.id))))
       .then(

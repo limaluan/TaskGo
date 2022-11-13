@@ -19,7 +19,7 @@ export function ConfirmationModal({
   const { refetch: refetchTasks } = useTasks();
 
   const handleDeleteEntity = async () => {
-    const response = await fetch(`http://localhost:3000/api/entity`, {
+    await fetch(`http://localhost:3000/api/entity`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -43,6 +43,7 @@ export function ConfirmationModal({
     >
       <ModalContainer>
         <h1>Deseja remover {entity.name}?</h1>
+        {entity.type === "group" && <h2 className="error-msg">Remover este grupo, removerá também todos usuários que fazem parte dele.</h2> }
         <button
           onClick={handleDeleteEntity}
           className="cancel-button"
