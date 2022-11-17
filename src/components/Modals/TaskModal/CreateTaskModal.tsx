@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { api } from "../../../services/api";
 import {
   getGroups,
   useEntities,
@@ -37,7 +36,8 @@ export function CreateTaskModal({
   const [description, setDescription] = useState("");
   const [userId, setUserId] = useState("");
   const [groupId, setGroupId] = useState("");
-  const [minutes, setMinutes] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
   // Define qual GRUPO foi selecionado
   const setGroupActive = (groupId: string) => {
@@ -60,22 +60,34 @@ export function CreateTaskModal({
   };
 
   // Faz o POST da Tarefa após o Submit
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const iso = date + "T" + time + ":00";
+    const newDate = new Date(iso);
+
     const task = {
       description,
       user_id: userId,
       group_id: groupId,
       created_at: new Date(),
-      time_to_finish: minutes,
+      expiration_date: newDate.getTime(),
     };
 
-    try {
-      await api.post("/tasks", task);
-    } catch (e: any) {
-      return setErrorMsg(e.response.data.message + "*");
+    const response = await fetch('http://localhost:3000/api/task', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    }).then(response => response.json())
+
+    if (response.error) {
+      return setErrorMsg(response.error);
     }
 
-    console.log(task);
+    setErrorMsg("");
     setGroupId("");
     setUserId("");
     setDescription("");
@@ -100,86 +112,105 @@ export function CreateTaskModal({
       <ModalContainer>
         {/* Formulário da Tarefa */}
         <h1>Criar Tarefa</h1>
-        <input
-          type="text"
-          placeholder="Descrição da tarefa*"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Minutos para finalizar*"
-          value={minutes}
-          onChange={(e) => setMinutes(e.target.value)}
-        />
-
-        {/* Seção para selecionar Grupo */}
-        <h2>Selecione um grupo para a tarefa:*</h2>
-        <section className="select-section">
-          <div className="wrapper">
-            {groups.length >= 1 ? (
-              <>
-                {groups.map((group) => (
-                  <div
-                    className="group-card"
-                    key={group.id}
-                    id={`group-${group.id}`}
-                    onClick={() => setGroupActive(group.id)}
-                  >
-                    <i className="material-icons">group</i>
-                    <span>{group.name}</span>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <h1 style={{ padding: "1rem 0" }}>Não há grupos cadastrados.</h1>
-            )}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Descrição da tarefa*"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <h1>Data de Expiração*</h1>
+          <div style={{ display: "flex", gap: "2rem" }}>
+            <input
+              type="date"
+              placeholder="Data para finalizar"
+              value={date}
+              min={new Date().toLocaleDateString("af-ZA")}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+            <input
+              type="time"
+              placeholder="Horario para finalizar"
+              value={time}
+              min={
+                new Date(date).getDate() + 1 === new Date().getDate()
+                  ? new Date().getHours().toLocaleString() + ":" + new Date().getMinutes().toLocaleString()
+                  : ""
+              }
+              onChange={(e) => setTime(e.target.value)}
+              required
+            />
           </div>
-        </section>
 
-        {/* Seção para selecionar usuário */}
-        {groupId !== "" && (
-          <>
-            <h2>
-              Designe um usuário para tarefa: <br /> Opcional
-            </h2>
-            <section className="select-section">
-              <div className="wrapper">
-                {isUsersLoading ? (
-                  <LoadingSpinner />
-                ) : usersError ? (
-                  <h1>Não foi possível carregar os usuários.</h1>
-                ) : users && users.length >= 1 ? (
-                  <>
-                    {users
-                      .filter((user) => user.group.id === groupId)
-                      .map((user) => (
-                        <div
-                          className="user-card"
-                          key={user.id}
-                          id={`user-${user.id}`}
-                          onClick={() => setUserActive(user.id)}
-                        >
-                          <i className="material-icons">account_circle</i>
-                          <span>{user.name}</span>
-                        </div>
-                      ))}
-                  </>
-                ) : (
-                  <h1 style={{ padding: "1rem 0" }}>
-                    Não há usuários cadastrados.
-                  </h1>
-                )}
-              </div>
-            </section>
-          </>
-        )}
+          {/* Seção para selecionar Grupo */}
+          <h2>Selecione um grupo para a tarefa:*</h2>
+          <section className="select-section">
+            <div className="wrapper">
+              {groups.length >= 1 ? (
+                <>
+                  {groups.map((group) => (
+                    <div
+                      className="group-card"
+                      key={group.id}
+                      id={`group-${group.id}`}
+                      onClick={() => setGroupActive(group.id)}
+                    >
+                      <i className="material-icons">group</i>
+                      <span>{group.name}</span>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <h1 style={{ padding: "1rem 0" }}>Não há grupos cadastrados.</h1>
+              )}
+            </div>
+          </section>
 
-        <p className="error-msg">{errorMsg}</p>
-        <button className="create-button" onClick={handleSubmit}>
-          <i className="material-icons">add</i>
-          Criar Tarefa
-        </button>
+          {/* Seção para selecionar usuário */}
+          {groupId !== "" && (
+            <>
+              <h2>
+                Designe um usuário para tarefa: <br /> Opcional
+              </h2>
+              <section className="select-section">
+                <div className="wrapper">
+                  {isUsersLoading ? (
+                    <LoadingSpinner />
+                  ) : usersError ? (
+                    <h1>Não foi possível carregar os usuários.</h1>
+                  ) : users && users.length >= 1 ? (
+                    <>
+                      {users
+                        .filter((user) => user.group.id === groupId)
+                        .map((user) => (
+                          <div
+                            className="user-card"
+                            key={user.id}
+                            id={`user-${user.id}`}
+                            onClick={() => setUserActive(user.id)}
+                          >
+                            <i className="material-icons">account_circle</i>
+                            <span>{user.name}</span>
+                          </div>
+                        ))}
+                    </>
+                  ) : (
+                    <h1 style={{ padding: "1rem 0" }}>
+                      Não há usuários cadastrados.
+                    </h1>
+                  )}
+                </div>
+              </section>
+            </>
+          )}
+
+          <p className="error-msg">{errorMsg}</p>
+          <button type="submit" className="create-button">
+            <i className="material-icons">add</i>
+            Criar Tarefa
+          </button>
+        </form>
       </ModalContainer>
     </Modal>
   );
