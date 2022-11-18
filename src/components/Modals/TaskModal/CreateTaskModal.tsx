@@ -15,6 +15,16 @@ interface ICreateTaskModalProps {
   onRequestClose: () => void;
 }
 
+interface ISetUserActive {
+  userId: string;
+  userName: string;
+}
+
+interface ISetGroupActive {
+  groupId: string;
+  groupName: string;
+}
+
 export function CreateTaskModal({
   isOpen,
   onRequestClose,
@@ -35,27 +45,31 @@ export function CreateTaskModal({
   // Formulário da Tarefa
   const [description, setDescription] = useState("");
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [groupId, setGroupId] = useState("");
+  const [groupName, setGroupName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
   // Define qual GRUPO foi selecionado
-  const setGroupActive = (groupId: string) => {
+  const setGroupActive = ({ groupId, groupName }: ISetGroupActive) => {
     document.querySelectorAll(".group-card").forEach((card) => {
       card.classList.remove("selected");
     });
 
     setGroupId(groupId);
+    setGroupName(groupName);
     document.querySelector(`#group-${groupId}`)?.classList.add("selected");
   };
 
   // Define qual USUÁRIO foi selecionado
-  const setUserActive = (userId: string) => {
+  const setUserActive = ({ userId, userName }: ISetUserActive) => {
     document.querySelectorAll(".user-card").forEach((card) => {
       card.classList.remove("selected");
     });
 
     setUserId(userId);
+    setUserName(userName);
     document.querySelector(`#user-${userId}`)?.classList.add("selected");
   };
 
@@ -64,14 +78,17 @@ export function CreateTaskModal({
     e.preventDefault();
 
     const iso = date + "T" + time + ":00";
-    const newDate = new Date(iso);
+    const expirationDate = new Date(iso);
 
     const task = {
       description,
-      user_id: userId,
-      group_id: groupId,
+      user: {
+        id: userId,
+        name: userName,
+      },
+      group: { id: groupId, name: groupName },
       created_at: new Date(),
-      expiration_date: newDate.getTime(),
+      expiration_date: expirationDate.getTime(),
     };
 
     const response = await fetch('http://localhost:3000/api/task', {
@@ -154,7 +171,7 @@ export function CreateTaskModal({
                       className="group-card"
                       key={group.id}
                       id={`group-${group.id}`}
-                      onClick={() => setGroupActive(group.id)}
+                      onClick={() => setGroupActive({ groupId: group.id, groupName: group.name })}
                     >
                       <i className="material-icons">group</i>
                       <span>{group.name}</span>
@@ -188,7 +205,7 @@ export function CreateTaskModal({
                             className="user-card"
                             key={user.id}
                             id={`user-${user.id}`}
-                            onClick={() => setUserActive(user.id)}
+                            onClick={() => setUserActive({ userId: user.id, userName: user.name })}
                           >
                             <i className="material-icons">account_circle</i>
                             <span>{user.name}</span>

@@ -1,7 +1,7 @@
-import { ITask } from './../../services/mirage/index';
 import { NextApiRequest, NextApiResponse } from "next";
 import fauna from "../../services/fauna";
 import { query as q } from "faunadb";
+import { ITask } from "../../services/mirage";
 
 export default async function task(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {

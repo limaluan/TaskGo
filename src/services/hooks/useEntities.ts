@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { api } from "../api";
 import { IEntity } from "../mirage";
 
 export async function getEntities(): Promise<IEntity[]> {
@@ -28,9 +27,9 @@ export async function getGroups() {
 
 // Retorna todos os USUÁRIOS
 export async function getUsers(): Promise<IEntity[]> {
-  const { data } = await api.get("/users");
-
-  const users = data.entities;
+  const users = (await getEntities()).filter(
+    (entity) => entity.type === "user"
+  );
 
   return users;
 }
