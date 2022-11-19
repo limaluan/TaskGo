@@ -21,6 +21,19 @@
 
 ---
 
+<h2><img height="36px" src="https://bignerdranch.com/wp-content/uploads/2020/09/faunadblogo-square.png"/> FaunaDB</h2>
+
+<p>O <b>FaunaDB</b> é um banco de dados serverless e foi utilizado nesta aplicação como banco de dados único.</p>
+
+---
+
+<h2><img height="36px" src="https://seeklogo.com/images/R/react-query-logo-1340EA4CE9-seeklogo.com.png"> React Query</h2>
+
+<p>Com o <b>React Query</b> é possível salvar e manusear dados em cache de forma simples e intuitiva.</p>
+<p>O <b>React Query</b> foi utilizado para aumentar a performance e melhorar a experiência do usuário ao navegar entre as páginas da aplicação sem enfrentar carregamentos de dados repetidos.</p>
+
+---
+
 <h2><img height="36px" src="https://avatars.githubusercontent.com/u/47899903?s=200&v=4"/> MirageJs</h2>
 
 <p>O <b>MirageJs</b> foi utilizado neste projeto, para criar uma FakeApi, visando
@@ -29,12 +42,6 @@ a implementação de um back-end com uma API real e 100% funcional no futuro.</p
 criar códigos como se estivesse consumindo uma API real, assim quando houver uma
 API real apenas substituir a API Fake.</p>
 
----
-
-<h2><img height="36px" src="https://seeklogo.com/images/R/react-query-logo-1340EA4CE9-seeklogo.com.png"> React Query</h2>
-
-<p>Com o <b>React Query</b> é possível salvar e manusear dados em cache de forma simples e intuitiva.</p>
-<p>O <b>React Query</b> foi utilizado para aumentar a performance e melhorar a experiência do usuário ao navegar entre as páginas da aplicação sem enfrentar carregamentos de dados repetidos.</p>
 
 ---
 
@@ -57,7 +64,7 @@ API real apenas substituir a API Fake.</p>
 - Criar Grupos
 - Criar Tarefas
 - Associar Tarefas a usuários ou a grupos
-- Definir tempo para conclusão de tarefas
+- Definir data limite para conclusão de tarefas
 - Acompanhamento em tempo real do estado das tarefas.
 
 ## 🔖 Layout
