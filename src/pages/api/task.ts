@@ -36,4 +36,19 @@ export default async function task(req: NextApiRequest, res: NextApiResponse) {
       .then((response) => res.status(202).json(response))
       .catch((error) => res.status(400).json(error));
   }
+
+  if (req.method === "DELETE") {
+    const taskId = req.body;
+
+    await fauna
+      .query(q.Get(q.Match(q.Index("task_by_id"), q.Casefold(taskId))))
+      .then(
+        async (entity: any) => await fauna.query(q.Delete(q.Ref(entity.ref)))
+      )
+      .catch((error) => {
+        return res.status(400).json({ error });
+      });
+
+    return res.status(202).json({ message: "Entidade deletada com Êxito." });
+  }
 }

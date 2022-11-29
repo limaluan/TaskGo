@@ -24,9 +24,10 @@ export interface ITask {
     id: string;
     name: string;
   };
-  created_at: string;
+  created_at: number;
   time_to_finish: string;
   reimaing_time: string;
+  expiration_date: number;
 }
 
 export function makeServer() {

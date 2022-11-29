@@ -1,36 +1,15 @@
 import { ITask } from "./../mirage/index";
 import { useQuery } from "react-query";
-import { api } from "../api";
 
 export async function getTasks(): Promise<ITask[]> {
-  const { data } = await api.get("/tasks");
+  const data = await fetch("http://localhost:3000/api/task").then((response) =>
+    response.json()
+  );
 
-  const tasks = data.tasks.map((task: ITask) => {
-    // Tratamento para obter o tempo restante parta fazer a tarefa
-    const date1: any = new Date();
-    const date2: any = new Date(task.time_to_finish);
-    const diffTime = Math.ceil(date2 - date1);
+  const allTasks = data.data.map((taskData: any) => taskData.data);
 
-    let newState;
-
-    if (
-      (task.state === "fazer" || task.state === "fazendo") &&
-      Math.floor(diffTime) <= 1
-    ) {
-      console.log(task.state);
-      console.log(Math.floor(diffTime / (1000 * 60)));
-      newState = "atrasada";
-    } else {
-      newState = task.state;
-    }
-
-    return {
-      ...task,
-      id: task.id,
-      description: task.description,
-      state: newState,
-      reimaing_time: Math.floor(diffTime / (1000 * 60)),
-    };
+  const tasks = allTasks.map((task: ITask) => {
+    return { ...task };
   });
 
   return tasks;
@@ -38,8 +17,5 @@ export async function getTasks(): Promise<ITask[]> {
 
 // Retorna todas tarefas ( Direto pelo cache )
 export function useTasks() {
-  return useQuery("tasks", getTasks, {
-    staleTime: 1000 * 5 /* 5 Segundos */,
-    refetchInterval: 1000 * 60 /* 1 Minuto */,
-  });
+  return useQuery("tasks", getTasks);
 }

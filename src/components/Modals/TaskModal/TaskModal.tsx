@@ -82,7 +82,14 @@ export function EditTaskModal({
   // Realiza o DELETE da tarefa depois do Submit
   const handleDeleteTask = async () => {
     try {
-      await api.delete(`/tasks/${task?.id}`);
+      await fetch(`http://localhost:3000/api/task`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task?.id)
+      }).then(response => response.json())
     } catch (e) {
       return console.log(e);
     }

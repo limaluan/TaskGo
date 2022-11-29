@@ -82,12 +82,13 @@ export function CreateTaskModal({
 
     const task = {
       description,
+      id: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())), // Generates a ID
       user: {
         id: userId,
         name: userName,
       },
       group: { id: groupId, name: groupName },
-      created_at: new Date(),
+      created_at: new Date().getTime(),
       expiration_date: expirationDate.getTime(),
     };
 

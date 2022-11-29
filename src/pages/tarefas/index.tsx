@@ -101,9 +101,9 @@ export default function Tarefas() {
                         <h3>{task.description}</h3>
                       </div>
                       <div className={`task-state ${task.state}`}>
-                        <h3>{task.state.toUpperCase()}</h3>
+                        <h3>{task.expiration_date - new Date().getTime() < 0 ? "Atrasada" : "Fazer"}</h3>
                         {task.state === "fazer" || task.state === "fazendo" ? (
-                          <p>[ {task.reimaing_time} Min ]</p>
+                          <p>[ 10 Min ]</p>
                         ) : (
                           <></>
                         )}
