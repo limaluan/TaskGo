@@ -3,8 +3,8 @@ import { useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { CreateTaskModal } from "../../components/Modals/TaskModal/CreateTaskModal";
 import { EditTaskModal } from "../../components/Modals/TaskModal/TaskModal";
-import { useTasks } from "../../services/hooks/useTasks";
-import { ITask } from "../../services/mirage";
+import { ITask, useTasks } from "../../services/hooks/useTasks";
+import { convertMsToTime } from "../../services/utils";
 import { TarefasContainer } from "./styles";
 
 export default function Tarefas() {
@@ -103,9 +103,9 @@ export default function Tarefas() {
                       <div className={`task-state ${task.state}`}>
                         <h3>{task.expiration_date - new Date().getTime() < 0 ? "Atrasada" : "Fazer"}</h3>
                         {task.state === "fazer" || task.state === "fazendo" ? (
-                          <p>[ 10 Min ]</p>
+                          <p></p>
                         ) : (
-                          <></>
+                          <> [ {convertMsToTime(task.expiration_date - new Date().getTime())} ] </>
                         )}
                       </div>
                       <div className="task-user">

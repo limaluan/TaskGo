@@ -1,4 +1,5 @@
 import { createServer, Factory, Model } from "miragejs";
+import { ITask } from "../hooks/useTasks";
 
 export interface IEntity {
   id: string;
@@ -10,24 +11,6 @@ export interface IEntity {
     name: string;
   };
   tasks: string[];
-}
-
-export interface ITask {
-  id: string;
-  description: string;
-  state: string;
-  user: {
-    id: string;
-    name: string;
-  };
-  group: {
-    id: string;
-    name: string;
-  };
-  created_at: number;
-  time_to_finish: string;
-  reimaing_time: string;
-  expiration_date: number;
 }
 
 export function makeServer() {

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useContext, useState } from "react";
 import { GroupTaskModal } from "../../components/Modals/GroupTaskModal";
 import { UserContext } from "../../contexts/UserContext";
-import { ITask } from "../../services/mirage";
+import { ITask } from "../../services/hooks/useTasks";
 import { GrupoContainer } from "./styles";
 
 export default function Usuario() {

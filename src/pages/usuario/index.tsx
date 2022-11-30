@@ -2,8 +2,7 @@ import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 import { UserTaskModal } from "../../components/Modals/UserModal/UserTaskModal";
 import { UserContext } from "../../contexts/UserContext";
-import { useTasks } from "../../services/hooks/useTasks";
-import { ITask } from "../../services/mirage";
+import { ITask, useTasks } from "../../services/hooks/useTasks";
 import { UsuarioContainer } from "./styles";
 
 export default function Usuario() {

@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
-import { useTasks } from "../services/hooks/useTasks";
-import { IEntity, ITask } from "../services/mirage";
+import { ITask, useTasks } from "../services/hooks/useTasks";
+import { IEntity } from "../services/mirage";
 
 interface IAuthContextData {
   signIn(userId: string): Promise<any>;

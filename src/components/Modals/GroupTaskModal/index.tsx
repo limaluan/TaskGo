@@ -2,8 +2,7 @@ import { useContext } from "react";
 import Modal from "react-modal";
 import { UserContext } from "../../../contexts/UserContext";
 import { api } from "../../../services/api";
-import { useTasks } from "../../../services/hooks/useTasks";
-import { ITask } from "../../../services/mirage";
+import { ITask, useTasks } from "../../../services/hooks/useTasks";
 import { ModalContainer } from "../TaskModal/styles";
 
 interface ICreateEntityModalProps {
