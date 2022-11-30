@@ -1,17 +1,6 @@
 import { createServer, Factory, Model } from "miragejs";
+import { IEntity } from "../hooks/useEntities";
 import { ITask } from "../hooks/useTasks";
-
-export interface IEntity {
-  id: string;
-  name: string;
-  type: string;
-  created_at: string;
-  group: {
-    id: string;
-    name: string;
-  };
-  tasks: string[];
-}
 
 export function makeServer() {
   const server = createServer({

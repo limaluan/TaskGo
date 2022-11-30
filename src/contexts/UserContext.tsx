@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
+import { IEntity } from "../services/hooks/useEntities";
 import { ITask, useTasks } from "../services/hooks/useTasks";
-import { IEntity } from "../services/mirage";
 
 interface IAuthContextData {
   signIn(userId: string): Promise<any>;
@@ -52,7 +52,7 @@ export function UserAuthProvider({ children }: IUserAuthProps) {
     try {
       const user = await api.get(`/user/${userId}`);
       setUser(user.data.entity);
-    } catch (e: any) {}
+    } catch (e: any) { }
 
     return user;
   }

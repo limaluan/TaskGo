@@ -1,7 +1,7 @@
-import { IEntity } from "./../../services/mirage/index";
 import fauna from "../../services/fauna";
 import { query as q } from "faunadb";
 import { NextApiRequest, NextApiResponse } from "next";
+import { IEntity } from "../../services/hooks/useEntities";
 
 interface IEntityInDb {
   ref: any; // Temporariamente Inutilizado

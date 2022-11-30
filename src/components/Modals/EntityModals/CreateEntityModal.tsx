@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useEntities, getGroups } from "../../../services/hooks/useEntities";
-import { IEntity } from "../../../services/mirage";
+import { useEntities, getGroups, IEntity } from "../../../services/hooks/useEntities";
 import { ModalContainer } from "./styles";
 
 interface ICreateEntityModalProps {

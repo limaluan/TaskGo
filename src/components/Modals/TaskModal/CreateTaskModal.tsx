@@ -2,11 +2,11 @@ import { FormEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
 import {
   getGroups,
+  IEntity,
   useEntities,
   useUsers,
 } from "../../../services/hooks/useEntities";
 import { useTasks } from "../../../services/hooks/useTasks";
-import { IEntity } from "../../../services/mirage";
 import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
 import { ModalContainer } from "../EntityModals/styles";
 
