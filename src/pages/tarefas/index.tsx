@@ -3,6 +3,7 @@ import { useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { CreateTaskModal } from "../../components/Modals/TaskModal/CreateTaskModal";
 import { EditTaskModal } from "../../components/Modals/TaskModal/TaskModal";
+import { Task } from "../../components/Task";
 import { ITask, useTasks } from "../../services/hooks/useTasks";
 import { convertMsToTime } from "../../services/utils";
 import { TarefasContainer } from "./styles";
@@ -85,38 +86,17 @@ export default function Tarefas() {
                   return search.toLowerCase() === ""
                     ? task
                     : task.description
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
-                        task.user?.name
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        task.group?.name
-                          .toLowerCase()
-                          .includes(search.toLowerCase());
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    task.user?.name
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    task.group?.name
+                      .toLowerCase()
+                      .includes(search.toLowerCase());
                 })
                 .map((task) => (
-                  <div key={task.id} onClick={() => handleEditTask(task)}>
-                    <div className="task">
-                      <div className="task-description">
-                        <h3>{task.description}</h3>
-                      </div>
-                      <div className={`task-state ${task.state}`}>
-                        <h3>{task.expiration_date - new Date().getTime() < 0 ? "Atrasada" : "Fazer"}</h3>
-                        {task.state === "fazer" || task.state === "fazendo" ? (
-                          <p></p>
-                        ) : (
-                          <> [ {convertMsToTime(task.expiration_date - new Date().getTime())} ] </>
-                        )}
-                      </div>
-                      <div className="task-user">
-                        <h3>{task.user?.name ? task.user?.name : "---"}</h3>
-                      </div>
-                      <div className="task-description">
-                        <h3>{task.group?.name ? task.group?.name : "---"}</h3>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
+                  <Task key={task.id} task={task} handleEditTask={() => handleEditTask(task)} />
                 ))
             ) : (
               <h1 className="not-found">Não foi possível encontrar tarefas.</h1>
